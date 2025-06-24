@@ -1,0 +1,384 @@
+#paracharts .inside .hide,
+#paracharts-spreadsheet .inside .hide,
+#paracharts-csv .inside .hide {
+	display: none;
+}
+
+#paracharts-subtitle {
+	margin-left: 0;
+}
+
+.wp-list-table #paracharts-type {
+	width: 2rem;
+}
+.wp-list-table #paracharts-library {
+	width: 2.8125rem;
+}
+
+.column-paracharts-type span.type {
+	display: block;
+	position: relative;
+	text-indent: -999rem;
+	width: 100%;
+}
+.column-paracharts-type span.type::after {
+	background-position: left center;
+	background-repeat: no-repeat;
+	bottom: 0;
+	content: "";
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.column-paracharts-type span.type.line::after {
+	background-image: url("../images/types/line.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.spline::after {
+	background-image: url("../images/types/spline.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.area::after {
+	background-image: url("../images/types/area.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.column::after {
+	background-image: url("../images/types/column.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.stacked-column {
+	background-color: transparent;
+}
+.column-paracharts-type span.type.stacked-column::after {
+	background-image: url("../images/types/stacked-column.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.bar {
+	background-color: transparent;
+}
+.column-paracharts-type span.type.bar::after {
+	background-image: url("../images/types/bar.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.stacked-bar {
+	background-color: transparent;
+}
+.column-paracharts-type span.type.stacked-bar::after {
+	background-image: url("../images/types/stacked-bar.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.pie::after {
+	background-image: url("../images/types/pie.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.doughnut::after {
+	background-image: url("../images/types/doughnut.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.scatter::after {
+	background-image: url("../images/types/scatter.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.bubble::after {
+	background-image: url("../images/types/bubble.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.radar::after {
+	background-image: url("../images/types/radar.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.radar-area::after {
+	background-image: url("../images/types/radar-area.svg");
+	background-size: contain;
+}
+.column-paracharts-type span.type.polar::after {
+	background-image: url("../images/types/polar.svg");
+	background-size: contain;
+}
+
+.column-paracharts-library span.library {
+	background-position: left center;
+	background-repeat: no-repeat;
+	display: block;
+	filter: grayscale(100%);
+	text-indent: -999rem;
+	width: 100%;
+}
+.column-paracharts-library span.library.chartjs {
+	background-image: url("../external/chartjs/chartjs-logo.svg");
+	background-size: contain;
+}
+
+#paracharts-spreadsheet {
+	border-left: none;
+}
+#paracharts-spreadsheet .postbox-header {
+	border-bottom: none;
+}
+#paracharts-spreadsheet .postbox-header h2.hndle {
+	border-bottom: none;
+	border-left: 1px solid #cdd0d4;
+}
+#paracharts-spreadsheet h3 {
+	border-bottom: none;
+	border-left: 1px solid #cdd0d4;
+}
+#paracharts-spreadsheet .handlediv {
+	height: 35px;
+}
+#paracharts-spreadsheet .inside {
+	margin: 0;
+	padding: 0;
+}
+#paracharts-spreadsheet .nav-tab-wrapper {
+	border-bottom: none;
+	border-left: 1px solid #cdd0d4;
+	border-top: 1px solid #cdd0d4;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	padding-top: 7px;
+	white-space: nowrap;
+}
+#paracharts-spreadsheet .nav-tab-wrapper.hide {
+	display: none;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .add-sheet {
+	color: #82878c;
+	float: left;
+	margin-bottom: 0;
+	margin-left: 7px;
+	text-decoration: none;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .add-sheet:hover {
+	color: #000000;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .add-sheet span {
+	line-height: 38px;
+}
+@media (max-width: 782px) {
+	#paracharts-spreadsheet .nav-tab-wrapper .add-sheet span {
+		line-height: 46px;
+	}
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab {
+	display: inline-block;
+	float: none;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab span {
+	color: #555555;
+	margin-top: 3px;
+}
+@media (max-width: 782px) {
+	#paracharts-spreadsheet .nav-tab-wrapper .nav-tab span {
+		margin-top: 7px;
+	}
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab span:hover {
+	color: #c80011;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab input {
+	min-width: 30px;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab input[disabled=disabled] {
+	background: transparent;
+	border: 1px solid transparent;
+	box-shadow: none;
+	color: #555555;
+	-webkit-text-fill-color: #555555;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab.nav-tab-active span {
+	color: #000000;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab.nav-tab-active span:hover {
+	color: #c80011;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab.nav-tab-active input[disabled=disabled] {
+	color: #000000;
+	-webkit-text-fill-color: #000000;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab:last-of-type {
+	margin-right: 10px;
+}
+#paracharts-spreadsheet .nav-tab-wrapper .nav-tab.do-not-delete span {
+	display: none;
+}
+#paracharts-spreadsheet #paracharts-csv {
+	background-color: #f5f5f5;
+	border-left: 1px solid #cdd0d4;
+	border-top: 1px solid #dddddd;
+	padding: 15px 10px 10px;
+}
+#paracharts-spreadsheet #paracharts-csv::after {
+	clear: both;
+	content: "";
+	display: table;
+}
+#paracharts-spreadsheet #paracharts-csv::after {
+	clear: both;
+}
+#paracharts-spreadsheet #paracharts-csv .button {
+	margin-top: 6px;
+}
+#paracharts-spreadsheet #paracharts-csv .button.select {
+	margin-right: 10px;
+}
+#paracharts-spreadsheet #paracharts-csv div.import {
+	margin-right: 65px;
+}
+#paracharts-spreadsheet #paracharts-csv div.export {
+	float: right;
+}
+#paracharts-spreadsheet #paracharts-csv div.confirmation {
+	float: left;
+	margin-right: 10px;
+}
+#paracharts-spreadsheet #paracharts-csv div.confirmation select {
+	margin-top: 6px;
+	margin-bottom: 4px;
+}
+@media (max-width: 600px) {
+	#paracharts-spreadsheet #paracharts-csv div.confirmation select {
+		display: block;
+	}
+}
+#paracharts-spreadsheet #paracharts-csv div.file-info {
+	clear: left;
+	padding-top: 10px;
+}
+#paracharts-spreadsheet #paracharts-csv .warning,
+#paracharts-spreadsheet #paracharts-csv .error {
+	color: #b00000;
+}
+#paracharts-spreadsheet #paracharts-csv .error,
+#paracharts-spreadsheet #paracharts-csv .in-progress {
+	margin: 10px 0 0 5px;
+}
+#paracharts-spreadsheet #paracharts-csv .error:not(.hide),
+#paracharts-spreadsheet #paracharts-csv .in-progress:not(.hide) {
+	display: inline-block;
+}
+#paracharts-spreadsheet #paracharts-csv a.dashicons {
+	color: #b8b8b8;
+}
+#paracharts-spreadsheet #paracharts-csv a.dashicons:hover {
+	color: #b00000;
+}
+
+#paracharts .inside {
+	padding: 0;
+}
+#paracharts .inside .paracharts-container {
+	padding: 7px 10px 10px;
+}
+#paracharts .inside .settings {
+	background-color: #f5f5f5;
+	border-top: 1px solid #dddddd;
+	padding: 0 10px 10px;
+}
+#paracharts .inside .settings .row {
+	border-top: none;
+	padding: 0;
+}
+#paracharts .inside .settings .row::after {
+	clear: both;
+	content: "";
+	display: table;
+}
+#paracharts .inside .settings .row p {
+	margin-bottom: 0;
+}
+#paracharts .inside .settings .row.one p {
+	float: left;
+	margin-left: 1%;
+	width: 32%;
+}
+#paracharts .inside .settings .row.one p:first-child {
+	margin-left: 0;
+}
+#paracharts .inside .settings .row.two p {
+	float: left;
+	margin-left: 1%;
+	width: 32%;
+}
+#paracharts .inside .settings .row.two p:first-child {
+	margin-left: 0;
+}
+#paracharts .inside .settings .row.two p.shared {
+	display: none;
+}
+#paracharts .inside .settings .row.two.show-shared p {
+	width: 24%;
+}
+#paracharts .inside .settings .row.two.show-shared p.shared {
+	display: block;
+}
+#paracharts .inside .settings .row.three p, #paracharts .inside .settings .row.five p {
+	float: left;
+	width: 73%;
+}
+#paracharts .inside .settings .row.three p.units, #paracharts .inside .settings .row.five p.units {
+	float: right;
+	width: 25%;
+}
+#paracharts .inside .settings .row.four p {
+	margin-top: 5px;
+}
+#paracharts .inside .settings .row.four p label {
+	display: inline-block;
+	height: 23px;
+}
+#paracharts .inside .settings .row.six p {
+	float: right;
+	width: 49%;
+}
+#paracharts .inside .settings .row.six p:first-child {
+	float: left;
+}
+#paracharts .inside .row {
+	border-top: 1px solid #dddddd;
+	padding: 0 10px 10px;
+}
+#paracharts .inside .row::after {
+	clear: both;
+	content: "";
+	display: table;
+}
+#paracharts .inside .row.seven p {
+	float: right;
+	margin-bottom: 0;
+	width: 49%;
+}
+#paracharts .inside .row.seven p:first-child {
+	float: left;
+}
+#paracharts .inside .row.seven p.image {
+	position: relative;
+}
+#paracharts .inside .row.seven p.image em {
+	display: block;
+	margin-top: 5px;
+}
+#paracharts .inside .row.seven p.image .button {
+	bottom: 3px;
+	line-height: 22px;
+	min-height: 24px;
+	position: absolute;
+	right: 2px;
+}
+@media screen and (max-width: 782px) {
+	#paracharts .inside .row.seven p.image .button {
+		bottom: 0;
+		line-height: 30px;
+		min-height: 32px;
+	}
+}
+
+#paracharts-settings-page span.description {
+	color: #666666;
+}
+
+#paracharts-settings-error {
+	padding-left: 10px;
+	padding-right: 10px;
+}

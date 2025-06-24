@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "paracharts/chart",
+  "title": "ParaCharts",
+  "category": "layout",
+  "icon": "chart-pie",
+  "description": "Embed a chart made with ParaCharts into your posts and pages",
+  "textdomain": "paracharts",
+  "attributes": {
+    "chartId": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "paracharts-editor",
+  "editorStyle": "paracharts-editor-style",
+  "render": "file:./render.php"
+}
