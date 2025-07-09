@@ -225,9 +225,6 @@
 #paracharts-spreadsheet #paracharts-csv::after {
 	clear: both;
 }
-#paracharts-spreadsheet #paracharts-csv .button {
-	margin-top: 6px;
-}
 #paracharts-spreadsheet #paracharts-csv .button.select {
 	margin-right: 10px;
 }
@@ -235,6 +232,7 @@
 	display: flex;
 	gap: 16px;
 }
+#paracharts-spreadsheet .paracharts-notifications,
 #paracharts-spreadsheet #paracharts-csv div.confirmation {
 	display: flex;
 	align-items: end;
@@ -245,8 +243,9 @@
 	}
 }
 #paracharts-spreadsheet #paracharts-csv div.file-info {
-	clear: left;
-	padding-top: 10px;
+	display: flex;
+	align-items: end;
+	gap: 16px;
 }
 #paracharts-spreadsheet #paracharts-csv .warning,
 #paracharts-spreadsheet #paracharts-csv .error {
@@ -260,10 +259,16 @@
 #paracharts-spreadsheet #paracharts-csv .in-progress:not(.hide) {
 	display: inline-block;
 }
-#paracharts-spreadsheet #paracharts-csv a.dashicons {
+#paracharts-spreadsheet #paracharts-csv .dashicons {
 	color: #b8b8b8;
 }
-#paracharts-spreadsheet #paracharts-csv a.dashicons:hover {
+#paracharts-spreadsheet .button-link {
+	text-decoration: none;
+	margin: 0;
+	display: flex;
+	align-items: center;
+}
+#paracharts-spreadsheet #paracharts-csv button:hover .dashicons {
 	color: #b00000;
 }
 

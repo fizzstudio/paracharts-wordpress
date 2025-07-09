@@ -39,9 +39,11 @@
 				<p class="import error hide"></p>
 				<p class="import in-progress hide"><?php esc_html_e( 'Importing file', 'paracharts' ); ?></p>
 				<div class="file-info hide">
-					<a href="#cancel" title="<?php esc_attr_e( 'Cancel Import', 'paracharts' ); ?>" class="dashicons dashicons-dismiss"></a>
-					File: <span class="file-name"></span><br />
-					<span class="warning"><?php esc_html_e( 'Importing this file will replace all existing data in this sheet', 'paracharts' ); ?></span>
+					<button type="button" class="button button-link"><span class="dashicons dashicons-dismiss" aria-hidden="true"></span> Cancel</button>
+					<div>
+						File: <span class="file-name"></span><br />
+						<span class="warning"><?php esc_html_e( 'Importing this file will replace all existing data in this sheet', 'paracharts' ); ?></span>
+					</div>
 				</div>
 			</div>
 		</div>
