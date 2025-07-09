@@ -16,20 +16,23 @@
 		<div class="controls">
 			<button type="button" class="button button-secondary select"><?php esc_html_e( 'Select CSV File', 'paracharts' ); ?></button>
 			<div class="confirmation hide">
-				<button type="button" class="button button-secondary"><?php esc_html_e( 'Import', 'paracharts' ); ?></button>
-				<select name="<?php echo esc_attr( $this->get_field_name( 'csv_delimiter' ) ); ?>">
-					<?php
-					$csv_delimiter = paracharts()->get_settings( 'csv_delimiter' );
-				
-					foreach ( paracharts()->csv_delimiters as $delimiter => $delimiter_name ) {
-						?>
-						<option value="<?php echo esc_attr( $delimiter ); ?>"<?php selected( $delimiter, $csv_delimiter ); ?>>
-							<?php esc_html_e( $delimiter_name . ' Delimited', 'paracharts' ); ?>
-						</option>
+				<div>
+					<label for="csv_delimiter"><?php esc_html_e( 'CSV Delimiter', 'paracharts' ); ?></label><br />
+					<select id="csv_delimiter" name="<?php echo esc_attr( $this->get_field_name( 'csv_delimiter' ) ); ?>">
 						<?php
-					}
-					?>
-				</select>
+						$csv_delimiter = paracharts()->get_settings( 'csv_delimiter' );
+					
+						foreach ( paracharts()->csv_delimiters as $delimiter => $delimiter_name ) {
+							?>
+							<option value="<?php echo esc_attr( $delimiter ); ?>"<?php selected( $delimiter, $csv_delimiter ); ?>>
+								<?php esc_html_e( $delimiter_name . ' Delimited', 'paracharts' ); ?>
+							</option>
+							<?php
+						}
+						?>
+					</select>
+				</div>
+				<button type="button" class="button button-secondary"><?php esc_html_e( 'Import', 'paracharts' ); ?></button>
 			</div>
 			<div class="paracharts-notifications" role="alert" aria-atomic="true">
 				<p class="file error hide"><?php esc_html_e( 'You can only import CSV files', 'paracharts' ); ?></p>
