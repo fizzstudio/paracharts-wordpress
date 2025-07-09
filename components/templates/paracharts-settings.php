@@ -5,14 +5,6 @@
 		<table class="form-table" role="presentation">
 			<tbody>
 				<tr>
-					<th scope="row"></th>
-					<td>
-							<input type="checkbox" id="show_library" aria-describedby="show_library_description" name="<?php echo esc_attr( $this->get_field_name( 'show_library' ) ); ?>" value="yes"<?php checked( $settings['show_library'], 'yes' ); ?> />
-							<label for="show_library"><?php esc_html_e( 'Show Library in Edit Posts Screen', 'paracharts' ); ?></label><br />
-							<span class="description" id="show_library_description"><?php esc_html_e( 'Displays an icon indicating the library used for a chart in Edit Posts Screen of the WP Admin', 'paracharts' ); ?></span>	
-					</td>
-				</tr>
-				<tr>
 					<th scope="row"><?php esc_html_e( 'Performance', 'paracharts' ); ?></th>
 					<td>
 						<fieldset>
