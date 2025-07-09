@@ -68,10 +68,10 @@
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php esc_html_e( 'Image Width', 'paracharts' ); ?></th>
+					<th scope="row"><lable for="image_width"><?php esc_html_e( 'Image Width', 'paracharts' ); ?></label></th>
 					<td>
-						<input type="number" name="<?php echo esc_attr( paracharts()->admin()->get_field_name( 'image_width' ) ); ?>" value="<?php echo absint( $settings['image_width'] ); ?>" />
-						<p class="description">
+						<input type="number" id="image_width" aria-describedby="image_width_description" name="<?php echo esc_attr( paracharts()->admin()->get_field_name( 'image_width' ) ); ?>" value="<?php echo absint( $settings['image_width'] ); ?>" />
+						<p class="description" id="image_width_description">
 							<?php esc_html_e( 'The width of the image generated from your chart', 'paracharts' ); ?>
 						</p>
 					</td>
