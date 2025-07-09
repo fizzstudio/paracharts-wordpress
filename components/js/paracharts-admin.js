@@ -306,7 +306,8 @@
 		var $file_error    = $csv_container.find( '.file.error' );
 		var $file_import   = $csv_container.find( '.import.in-progress' );
 		var $import_error  = $csv_container.find( '.import.error' );
-		var $cancel        = $csv_container.find( '.dashicons-dismiss' );
+		var $cancel        = $csv_container.find( '.button-cancel' );
+		var $delimiter     = $csv_container.find( '#csv_delimiter' );
 
 		// Watch for clicks on the select button
 		$select.on( 'click', function( event ) {
@@ -330,20 +331,20 @@
 			$select.addClass( 'hide' );
 			$confirmation.removeClass( 'hide' );
 			$file_info.removeClass( 'hide' );
+			$delimiter.trigger( 'focus' );
 		});
 
 		// Watch for clicks on the cancel button
 		$cancel.on( 'click', function( event ) {
-			event.preventDefault();
 			$file_info.addClass( 'hide' );
 			$file_input.val( '' );
 			$select.removeClass( 'hide' );
+			$select.trigger( 'focus' );
 			$confirmation.addClass( 'hide' );
 		});
 
 		// Watch for clicks on import button
 		$confirmation.find( '.button' ).on( 'click', function( event ) {
-			event.preventDefault();
 
 			$file_info.addClass( 'hide' );
 			$confirmation.addClass( 'hide' );
