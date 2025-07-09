@@ -42,7 +42,7 @@
 		// Watch for clicks on the y min toggle
 		$( document.getElementById( 'paracharts-y-min' ) ).on( 'click', function () {
 			if ( $( this ).is( ':checked' ) ) {
-				paracharts_admin.$y_min_value.attr( 'disabled', false ).focus();
+				paracharts_admin.$y_min_value.attr( 'disabled', false ).trigger( 'focus' );
 			} else {
 				paracharts_admin.$y_min_value.attr( 'disabled', true );
 			}
@@ -196,7 +196,7 @@
 			event.preventDefault();
 
 			var $input = $( this ).find( 'input' );
-			$input.attr( 'disabled', false ).focus();
+			$input.attr( 'disabled', false ).trigger( 'focus' );
 		});
 
 		// Set input back to disabled on blur
