@@ -50,12 +50,12 @@
 
 		// Watch for clicks on the shortcode input
 		$( document.getElementById( 'paracharts-shortcode' ) ).on( 'click', function () {
-			$( this ).select();
+			$( this ).trigger( 'select' );
 		});
 
 		// Watch for clicks on the image input
 		$( document.getElementById( 'paracharts-image' ) ).on( 'click', function () {
-			$( this ).select();
+			$( this ).trigger( 'select' );
 		});
 
 		// Watch for clicks on the CSV tools
@@ -168,7 +168,7 @@
 			// Check tab count
 			paracharts_admin.check_tab_count();
 
-			$( new_tab ).click().find( 'input' ).trigger( 'dblclick' );
+			$( new_tab ).on( 'click' ).find( 'input' ).trigger( 'dblclick' );
 			paracharts_admin.refresh_chart();
 		});
 
@@ -189,7 +189,7 @@
 		});
 
 		// On the initial load of the interface we should select the initial tab
-		this.$spreadsheet_tabs.find( '.nav-tab' ).first().click();
+		this.$spreadsheet_tabs.find( '.nav-tab' ).first().trigger( 'click' );
 
 		// Handle double clicks and long presses on the tabs
 		this.$spreadsheet_tabs.on( 'dblclick taphold', '.nav-tab', function( event ) {
@@ -229,7 +229,7 @@
 
 			// Select the tab we're working with if necessary
 			if ( ! $tab.hasClass( 'nav-tab-active' ) ) {
-				$tab.click();
+				$tab.trigger( 'click' );
 			}
 
 			var instance = $( this ).closest( '.nav-tab' ).data( 'instance' );
@@ -247,7 +247,7 @@
 			paracharts_admin.check_tab_count();
 
 			// Select the first tab and refresh the chart to reflect the changes
-			paracharts_admin.$spreadsheet_tabs.find( '.nav-tab' ).first().click();
+			paracharts_admin.$spreadsheet_tabs.find( '.nav-tab' ).first().trigger( 'click' );
 			paracharts_admin.refresh_chart();
 		});
 	};
