@@ -326,19 +326,6 @@ class ParachartsJs {
 			);
 		}
 
-		// Apply the theme
-		if ( $theme = $this->get_theme( $this->post_meta['theme'] ) ) {
-			if ( isset( $theme['colors'] ) ) {
-				$this->colors = $theme['colors'];
-				unset( $theme['colors'] );
-			}
-
-			if ( isset( $theme['points'] ) ) {
-				$this->points = $theme['points'];
-				unset( $theme['points'] );
-			}
-		}
-
 		$this->colors = apply_filters( 'paracharts_colors', $this->colors, $this->post );
 		$this->points = apply_filters( 'paracharts_points', $this->points, $this->post );
 
@@ -464,10 +451,6 @@ class ParachartsJs {
 				'offset'  => 3,
 				'display' => 'auto',
 			);
-		}
-
-		if ( $theme ) {
-			$chart_args = paracharts()->array_merge_recursive( $chart_args, $theme );
 		}
 
 		$chart_args = apply_filters( 'paracharts_chart_args', $chart_args, $this->post, $this->post_meta, $this->args );
