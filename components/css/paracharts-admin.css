@@ -280,26 +280,16 @@
 	border-top: none;
 	padding: 0;
 }
-#paracharts .inside .settings .row::after {
-	clear: both;
-	content: "";
-	display: table;
-}
 #paracharts .inside .settings .row p {
 	margin-bottom: 0;
 }
-#paracharts .inside .settings .row.one p {
-	float: left;
-	margin-left: 1%;
-	width: 32%;
+#paracharts .inside .settings .row {
+	display: flex;
+	align-items: end;
+	gap: 24px;
 }
 #paracharts .inside .settings .row.one p:first-child {
 	margin-left: 0;
-}
-#paracharts .inside .settings .row.two p {
-	float: left;
-	margin-left: 1%;
-	width: 32%;
 }
 #paracharts .inside .settings .row.two p:first-child {
 	margin-left: 0;
@@ -307,19 +297,8 @@
 #paracharts .inside .settings .row.two p.shared {
 	display: none;
 }
-#paracharts .inside .settings .row.two.show-shared p {
-	width: 24%;
-}
 #paracharts .inside .settings .row.two.show-shared p.shared {
 	display: block;
-}
-#paracharts .inside .settings .row.three p, #paracharts .inside .settings .row.five p {
-	float: left;
-	width: 73%;
-}
-#paracharts .inside .settings .row.three p.units, #paracharts .inside .settings .row.five p.units {
-	float: right;
-	width: 25%;
 }
 #paracharts .inside .settings .row.four p {
 	margin-top: 5px;
@@ -328,29 +307,9 @@
 	display: inline-block;
 	height: 23px;
 }
-#paracharts .inside .settings .row.six p {
-	float: right;
-	width: 49%;
-}
-#paracharts .inside .settings .row.six p:first-child {
-	float: left;
-}
 #paracharts .inside .row {
 	border-top: 1px solid #dddddd;
 	padding: 0 10px 10px;
-}
-#paracharts .inside .row::after {
-	clear: both;
-	content: "";
-	display: table;
-}
-#paracharts .inside .row.seven p {
-	float: right;
-	margin-bottom: 0;
-	width: 49%;
-}
-#paracharts .inside .row.seven p:first-child {
-	float: left;
 }
 #paracharts .inside .row.seven p.image {
 	position: relative;
