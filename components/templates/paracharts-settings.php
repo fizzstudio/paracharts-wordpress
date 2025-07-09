@@ -3,7 +3,7 @@
 	<form method="post">
 		<?php wp_nonce_field( paracharts()->slug . '-save-settings', $this->get_field_name( 'nonce' ) ); ?>
 		<h2><?php esc_html_e( 'General Settings', 'paracharts' ); ?></h2>
-		<table class="form-table">
+		<table class="form-table" role="presentation">
 			<tbody>
 				<tr>
 					<th scope="row"></th>
