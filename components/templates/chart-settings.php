@@ -68,21 +68,37 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 			<label for="<?php echo esc_attr( $this->get_field_id( 'y-title' ) ); ?>"><?php esc_html_e( 'Vertical axis title', 'paracharts' ); ?></label><br />
 			<input class="input" type="text" name="<?php echo esc_attr( $this->get_field_name( 'y_title' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'y-title' ) ); ?>" value="<?php echo esc_attr( $post_meta['y_title'] ); ?>" style="width: 100%;" />
 		</p>
-		<p class="units">
+		<p class="units unit-type">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>_type"><?php esc_html_e( 'Unit Type', 'paracharts' ); ?></label><br />
+			<select name='<?php echo esc_attr( $this->get_field_name( 'y_units' ) ); ?>_type' id="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>_type" class='select'>
+				<option value=""><?php esc_html_e( 'N/A', 'paracharts' ); ?></option>
+				<?php
+				$selected_unit = $post_meta['y_units'];
+				$parent_name   = 'N/A';
+				if ( $selected_unit ) {
+					$term          = get_term_by( 'name', 'paracharts-units', $selected_unit );
+					$parent_name   = get_term_by( 'id', $term, 'paracharts-units' )->name;
+				}
+				foreach ( paracharts()->get_unit_terms() as $parent => $units ) {
+					?>
+					<option value="<?php echo esc_attr( $parent ); ?>"<?php selected( $parent, $parent_name ); ?>>
+						<?php echo esc_html( $parent ); ?>
+					</option>
+					<?php
+				}
+				?>
+			</select>
+		</p>
+		<p class="units unit">
 			<label for="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>"><?php esc_html_e( 'Units', 'paracharts' ); ?></label><br />
 			<select name='<?php echo esc_attr( $this->get_field_name( 'y_units' ) ); ?>' id="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>" class='select'>
 				<option value=""><?php esc_html_e( 'N/A', 'paracharts' ); ?></option>
 				<?php
 				foreach ( paracharts()->get_unit_terms() as $parent => $units ) {
-					?>
-					<option value="" disabled="disabled">
-						<?php echo esc_html( $parent ); ?>
-					</option>
-					<?php
 
 					foreach ( $units as $unit ) {
 						?>
-						<option value="<?php echo esc_attr( $unit->name ); ?>"<?php selected( $unit->name, $post_meta['y_units'] ); ?>>
+						<option class="<?php echo esc_attr( $parent ); ?>" value="<?php echo esc_attr( $unit->name ); ?>"<?php selected( $unit->name, $post_meta['y_units'] ); ?>>
 							<?php echo esc_html( $unit->name ); ?>
 						</option>
 						<?php
@@ -106,21 +122,37 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 			<label for="<?php echo esc_attr( $this->get_field_id( 'x-title' ) ); ?>"><?php esc_html_e( 'Horizontal axis title', 'paracharts' ); ?></label><br />
 			<input class="input" type="text" name="<?php echo esc_attr( $this->get_field_name( 'x_title' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'x-title' ) ); ?>" value="<?php echo esc_attr( $post_meta['x_title'] ); ?>" style="width: 100%;" />
 		</p>
-		<p class="units">
-			<label for="<?php echo esc_attr( $this->get_field_id( 'x-units' ) ); ?>"><?php esc_html_e( 'Units', 'paracharts' ); ?></label><br />
-			<select name='<?php echo esc_attr( $this->get_field_name( 'x_units' ) ); ?>' id="<?php echo esc_attr( $this->get_field_id( 'x-units' ) ); ?>" class='select'>
-				<option value=""><?php esc_html_e( 'N/A', 'paracharts' ) ?></option>
+		<p class="units unit-type">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'x-units' ) ); ?>_type"><?php esc_html_e( 'Unit Type', 'paracharts' ); ?></label><br />
+			<select name='<?php echo esc_attr( $this->get_field_name( 'x_units' ) ); ?>_type' id="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>_type" class='select'>
+				<option value=""><?php esc_html_e( 'N/A', 'paracharts' ); ?></option>
 				<?php
+				$selected_unit = $post_meta['x_units'];
+				$parent_name   = 'N/A';
+				if ( $selected_unit ) {
+					$term          = get_term_by( 'name', 'paracharts-units', $selected_unit );
+					$parent_name   = get_term_by( 'id', $term, 'paracharts-units' )->name;
+				}
 				foreach ( paracharts()->get_unit_terms() as $parent => $units ) {
 					?>
-					<option value="" disabled="disabled">
+					<option value="<?php echo esc_attr( $parent ); ?>"<?php selected( $parent, $parent_name ); ?>>
 						<?php echo esc_html( $parent ); ?>
 					</option>
 					<?php
+				}
+				?>
+			</select>
+		</p>
+		<p class="units unit">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'x-units' ) ); ?>"><?php esc_html_e( 'Units', 'paracharts' ); ?></label><br />
+			<select name='<?php echo esc_attr( $this->get_field_name( 'x_units' ) ); ?>' id="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>" class='select'>
+				<option value=""><?php esc_html_e( 'N/A', 'paracharts' ); ?></option>
+				<?php
+				foreach ( paracharts()->get_unit_terms() as $parent => $units ) {
 
 					foreach ( $units as $unit ) {
 						?>
-						<option value="<?php echo esc_attr( $unit->name ); ?>"<?php selected( $unit->name, $post_meta['x_units'] ); ?>>
+						<option class="<?php echo esc_attr( $parent ); ?>" value="<?php echo esc_attr( $unit->name ); ?>"<?php selected( $unit->name, $post_meta['y_units'] ); ?>>
 							<?php echo esc_html( $unit->name ); ?>
 						</option>
 						<?php
