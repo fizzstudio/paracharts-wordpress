@@ -5,17 +5,18 @@
 	<a href="#add-sheet" class="add-sheet" title="<?php esc_html_e( 'Add Sheet', 'paracharts' ); ?>"><span class="dashicons dashicons-plus-alt"></span></a>
 </nav>
 <div id="hands-on-table-sheets"></div>
+<div class="paracharts-wrapper">
+	<h3 class="import-heading"><?php esc_html_e( 'CSV Import/Export', 'paracharts' ); ?></h3>
+</div>
 <div id="paracharts-csv">
 	<div class="export">
-		<br />
-		<a href="#export-csv" title="<?php esc_attr_e( 'Export CSV', 'paracharts' ); ?>" class="button"><?php esc_html_e( 'Export', 'paracharts' ); ?></a>
+		<button type="button" class="button"><?php esc_html_e( 'Export Data', 'paracharts' ); ?></button>
 	</div>
 	<div class="import">
-		<?php esc_html_e( 'CSV Import/Export', 'paracharts' ); ?><br />
 		<div class="controls">
-			<a href="#select-csv" title="<?php esc_attr_e( 'Select CSV File', 'paracharts' ); ?>" class="button select"><?php esc_html_e( 'Select File', 'paracharts' ); ?></a>
+			<button type="button" class="button button-secondary select"><?php esc_html_e( 'Select CSV File', 'paracharts' ); ?></button>
 			<div class="confirmation hide">
-				<a href="#import-csv" title="<?php esc_attr_e( 'Import', 'paracharts' ); ?>" class="button"><?php esc_html_e( 'Import', 'paracharts' ); ?></a>
+				<button type="button" class="button button-secondary"><?php esc_html_e( 'Import', 'paracharts' ); ?></button>
 				<select name="<?php echo esc_attr( $this->get_field_name( 'csv_delimiter' ) ); ?>">
 					<?php
 					$csv_delimiter = paracharts()->get_settings( 'csv_delimiter' );
@@ -30,13 +31,15 @@
 					?>
 				</select>
 			</div>
-			<p class="file error hide"><?php esc_html_e( 'You can only import CSV files', 'paracharts' ); ?></p>
-			<p class="import error hide"></p>
-			<p class="import in-progress hide"><?php esc_html_e( 'Importing file', 'paracharts' ); ?></p>
-			<div class="file-info hide">
-				<a href="#cancel" title="<?php esc_attr_e( 'Cancel Import', 'paracharts' ); ?>" class="dashicons dashicons-dismiss"></a>
-				File: <span class="file-name"></span><br />
-				<span class="warning"><?php esc_html_e( 'Importing this file will replace all existing data in this sheet', 'paracharts' ); ?></span>
+			<div class="paracharts-notifications" role="alert" aria-atomic="true">
+				<p class="file error hide"><?php esc_html_e( 'You can only import CSV files', 'paracharts' ); ?></p>
+				<p class="import error hide"></p>
+				<p class="import in-progress hide"><?php esc_html_e( 'Importing file', 'paracharts' ); ?></p>
+				<div class="file-info hide">
+					<a href="#cancel" title="<?php esc_attr_e( 'Cancel Import', 'paracharts' ); ?>" class="dashicons dashicons-dismiss"></a>
+					File: <span class="file-name"></span><br />
+					<span class="warning"><?php esc_html_e( 'Importing this file will replace all existing data in this sheet', 'paracharts' ); ?></span>
+				</div>
 			</div>
 		</div>
 	</div>

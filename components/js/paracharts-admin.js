@@ -12,6 +12,10 @@
 		this.$title_input    = $( document.getElementById( 'titlewrap' ) ).find( 'input' );
 		this.$subtitle_input = $( document.getElementById( 'titlediv' ) ).find( '#paracharts-subtitle' );
 		this.$y_min_value    = $( document.getElementById( 'paracharts-y-min-value' ) );
+		this.$y_unit_type    = $( document.getElementById( 'paracharts-y-units_type' ) );
+		this.$x_unit_type    = $( document.getElementById( 'paracharts-x-units_type' ) );
+		this.$y_unit         = $( document.getElementById( 'paracharts-y-units' ) );
+		this.$x_unit         = $( document.getElementById( 'paracharts-x-units' ) );
 
 		// Store these for later
 		this.$form_buttons = $( '#save-post, #wp-preview, #post-preview, #publish' );
@@ -37,6 +41,13 @@
 
 				$( '.hands-on-table-sheet-tab-input' ).attr( 'disabled', false );
 			}
+		});
+
+		// Update Units on unit type select.
+		$( document.getElementById( 'paracharts-y-units_type' ) ).on( 'select', function() {
+			let type = $( this ).val();
+			let units = $( '#paracharts-y-units option' );
+			units.find( ':not(.' + type + ')' ).hide();
 		});
 
 		// Watch for clicks on the y min toggle
@@ -388,7 +399,7 @@
 
 	// Handle CSV export functionality
 	paracharts_admin.handle_csv_export = function() {
-		$( document.getElementById( 'paracharts-csv' ) ).find( '.export a' ).on( 'click', function( event ) {
+		$( document.getElementById( 'paracharts-csv' ) ).find( '.export button' ).on( 'click', function( event ) {
 			event.preventDefault();
 
 			var $form = $( document.getElementById( 'paracharts-csv-export-form' ) );
