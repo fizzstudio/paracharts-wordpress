@@ -39,7 +39,6 @@ class Paracharts {
 	public $instance     = 1;
 	public $settings     = array(
 		'library'          => 'paracharts',
-		'show_library'     => 'no',
 		'performance'      => 'default',
 		'image_multiplier' => '2',
 		'image_width'      => '600',

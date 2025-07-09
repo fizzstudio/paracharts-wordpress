@@ -400,10 +400,6 @@ class Paracharts_Admin {
 
 			if ( 'author' == $column || 'coauthors' == $column ) {
 				$new_columns[ paracharts()->slug . '-type' ] = 'Type';
-
-				if ( 'yes' == paracharts()->get_settings( 'show_library' ) ) {
-					$new_columns[ paracharts()->slug . '-library' ] = 'Library';
-				}
 			}
 		}
 
