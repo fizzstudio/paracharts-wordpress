@@ -82,8 +82,8 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 					$selected_unit = $post_meta['y_units'];
 					$parent_name   = 'N/A';
 					if ( $selected_unit ) {
-						$term          = get_term_by( 'name', $selected_unit, 'paracharts-units' );
-						$parent_name   = get_term_by( 'id', $term->term_id, 'paracharts-units' )->name;
+						$term        = get_term_by( 'name', $selected_unit, 'paracharts-units' );
+						$parent_name = get_term_by( 'id', $term->term_id, 'paracharts-units' )->name;
 					}
 					foreach ( paracharts()->get_unit_terms() as $parent => $units ) {
 						?>
@@ -101,7 +101,6 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 					<option value=""><?php esc_html_e( 'All', 'paracharts' ); ?></option>
 					<?php
 					foreach ( paracharts()->get_unit_terms() as $parent => $units ) {
-
 						foreach ( $units as $unit ) {
 							?>
 							<option class="<?php echo esc_attr( $parent ); ?>" value="<?php echo esc_attr( $unit->name ); ?>"<?php selected( $unit->name, $post_meta['y_units'] ); ?>>
