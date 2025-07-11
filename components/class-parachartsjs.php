@@ -144,7 +144,6 @@ class ParachartsJs {
 			'type'    => $this->chart_types[ $this->post_meta['type'] ],
 			'options' => array(
 				'plugins'             => array(
-					// @TODO Figure out how to support subtitles in Chart.js
 					'title'   => array(
 						'display' => true,
 						'text'    => $this->esc_title( apply_filters( 'the_title', $this->post->post_title, $this->post->ID ) ),
@@ -423,6 +422,16 @@ class ParachartsJs {
 			);
 		}
 
+		/**
+		 * Filter a chart's display arguments.
+		 *
+		 * @hook paracharts_chart_args
+		 *
+		 * @param {array}  $chart_args Chart display arguments.
+		 * @param {object} $post WP_Post object.
+		 * @param {array}  $post_meta Post meta data.
+		 * @param {array}  $args Raw display arguments.
+		 */
 		$chart_args = apply_filters( 'paracharts_chart_args', $chart_args, $this->post, $this->post_meta, $this->args );
 
 		// Set the cache, we'll regenerate this when someone updates the post

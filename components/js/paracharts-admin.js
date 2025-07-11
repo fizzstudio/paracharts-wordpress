@@ -11,7 +11,7 @@
 		this.$setting_inputs = $( document.getElementById( 'paracharts' ) ).find( '.settings input, .settings select' );
 		this.$title_input    = $( document.getElementById( 'titlewrap' ) ).find( 'input' );
 		this.$subtitle_input = $( document.getElementById( 'titlediv' ) ).find( '#paracharts-subtitle' );
-		this.$y_min_value    = $( document.getElementById( 'paracharts-y-min-value' ) );
+		this.$y_min_value    = $( document.getElementById( 'paracharts-y_min_value' ) );
 		this.$y_unit_type    = $( document.getElementById( 'paracharts-y-units_type' ) );
 		this.$x_unit_type    = $( document.getElementById( 'paracharts-x-units_type' ) );
 		this.$y_unit         = $( document.getElementById( 'paracharts-y-units' ) );

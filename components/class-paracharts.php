@@ -128,8 +128,14 @@ class Paracharts {
 	 * Library object accessor
 	 */
 	public function library() {
-
-		return apply_filters( 'paracharts_library_class', $this->library_class, 'paracharts' );
+		/**
+		 * Filter the characteristics of the ParaCharts class.
+		 *
+		 * @hook paracharts_library_class
+		 *
+		 * @param {Paracharts} $library_class Paracharts object characteristics.
+		 */
+		return apply_filters( 'paracharts_library_class', $this->library_class );
 	}
 
 	/**
@@ -288,9 +294,9 @@ class Paracharts {
 	 * Get chart post meta
 	 *
 	 * @param int $post_id WP post ID of the post you want post meta from
-	 * @param string $field optional field to be returend instead of all post meta
+	 * @param string $field optional field to be returned instead of all post meta
 	 *
-	 * @return string URL to the plugin directory with path if parameter was passed
+	 * @return string|array Array of chart post meta or single value.
 	 */
 	public function get_post_meta( $post_id, $field = false ) {
 		$raw_post_meta = get_post_meta( $post_id, $this->slug, true );
@@ -317,18 +323,19 @@ class Paracharts {
 			$post_meta['y_min_value'] = 0;
 		}
 
-		// If the data has the old legacy format we need to update it
-		if ( isset( $post_meta['data'] ) && ! isset( $post_meta['data']['sets'] ) ) {
-			$data                        = $post_meta['data'];
-			$post_meta['data']           = array();
-			$post_meta['data']['sets'][] = $data;
-		}
-
 		// If there's no set_names value set we'll set it to an empty array
 		if ( ! isset( $post_meta['set_names'] ) ) {
 			$post_meta['set_names'] = array();
 		}
-
+		/**
+		 * Filter the post meta data for a chart.
+		 *
+		 * @hook paracharts_get_post_meta
+		 *
+		 * @param {array} $post_meta Array of all post meta data with default values filled.
+		 * @param {array} $raw_post_meta Array of all raw post meta data.
+		 * @param {int}   $post_id Post ID.
+		 */
 		$post_meta = apply_filters( 'paracharts_get_post_meta', $post_meta, $raw_post_meta, $post_id );
 
 		if ( $field && isset( $post_meta[ $field ] ) ) {
@@ -420,7 +427,14 @@ class Paracharts {
 			$chart_meta['data'][ $key ] = $this->validate_data( $data );
 		}
 
-		// Allow plugins to validate their own custom meta
+		/**
+		 * Filter post meta after validation.
+		 *
+		 * @hook paracharts_validate_post_meta
+		 *
+		 * @param {array} $chart_meta Validated chart meta data.
+		 * @param {array} $meta Unvalidated meta data.
+		 */
 		$chart_meta = apply_filters( 'paracharts_validate_post_meta', $chart_meta, $meta );
 
 		return $chart_meta;
@@ -542,8 +556,31 @@ class Paracharts {
 		$template = __DIR__ . '/templates/paracharts-chart.php';
 
 		ob_start();
+		/**
+		 * Execute action before displaying a chart.
+		 *
+		 * @hook paracharts_get_chart_begin
+		 *
+		 * @param {int} $post_id Post ID.
+		 * @param {array} $args Array of display arguments.
+		 */
 		do_action( 'paracharts_get_chart_begin', $post_id, $args );
+		/**
+		 * Filter the ParaCharts chart template file.
+		 *
+		 * @hook paracharts_chart_template
+		 *
+		 * @param {string} $template Path to display template.
+		 */
 		require apply_filters( 'paracharts_chart_template', $template, $post_id );
+		/**
+		 * Execute action after displaying a chart.
+		 *
+		 * @hook paracharts_get_chart_end
+		 *
+		 * @param {int} $post_id Post ID.
+		 * @param {array} $args Array of display arguments.
+		 */
 		do_action( 'paracharts_get_chart_end', $post_id, $args );
 		$this->instance++;
 		return ob_get_clean();
@@ -569,7 +606,15 @@ class Paracharts {
 			$template = __DIR__ . '/templates/table.php';
 
 			ob_start();
-			require apply_filters( 'paracharts_table_template', $template, 'paracharts', $post->ID );
+			/**
+			 * Filter the template used for ParaChart table output.
+			 *
+			 * @hook paracharts_table_template
+			 *
+			 * @param {string} $template Path to template.
+			 * @param {int}    $post_ID Post ID.
+			 */
+			require apply_filters( 'paracharts_table_template', $template, $post->ID );
 			$table .= ob_get_clean();
 		}
 
@@ -696,16 +741,21 @@ class Paracharts {
 	 * @return string HTML needed to display a chart via an iframe
 	 */
 	public function get_chart_iframe( $post_id, $args = array() ) {
-		$post_meta = $this->get_post_meta( $post_id );
-
 		$src_url = add_query_arg( $args, get_permalink( $post_id ) . 'embed/' );
 
 		ob_start();
 		?>
-<iframe title="<?php echo esc_attr( get_the_title( $post_id ) ); ?>" id="paracharts-container-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>" class="paracharts-iframe" width="100%" height="600"	src="<?php echo esc_url_raw( $src_url ); ?>" frameborder="0"></iframe>
+<iframe title="<?php echo esc_attr( get_the_title( $post_id ) ); ?>" id="paracharts-container-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>" class="paracharts-iframe" width="100%" height="600" src="<?php echo esc_url_raw( $src_url ); ?>" frameborder="0"></iframe>
 		<?php
 		if ( 'show' == $args['share'] ) {
 			unset( $args['share'] );
+			/**
+			 * Filter template used to display chart share info.
+			 *
+			 * @hook paracharts_share_template
+			 *
+			 * @param {int} $template Path to share template.
+			 */
 			require apply_filters( 'paracharts_share_template', __DIR__ . '/templates/share.php' );
 		}
 		$this->instance++;
@@ -900,6 +950,13 @@ class Paracharts {
 	 */
 	public function get_settings( $setting = false ) {
 		// Allow third party libraries to modify the default settings
+		/**
+		 * Filter ParaCharts default settings.
+		 *
+		 * @hook paracharts_default_settings
+		 *
+		 * @param {array} $settings Array of all default settings.
+		 */
 		$default_settings = apply_filters( 'paracharts_default_settings', $this->settings );
 
 		$settings = (array) get_option( $this->slug, $default_settings );
@@ -908,6 +965,13 @@ class Paracharts {
 		// Make sure the lang_settings aren't missing anything we'll be expecting later on
 		$settings['lang_settings'] = wp_parse_args( $settings['lang_settings'], $this->settings['lang_settings'] );
 
+		/**
+		 * Filter ParaCharts settings.
+		 *
+		 * @hook paracharts_get_settings
+		 *
+		 * @param {array} $settings Array of saved ParaCharts settings.
+		 */
 		$settings = apply_filters( 'paracharts_get_settings', $settings );
 
 		if ( $setting && isset( $settings[ $setting ] ) ) {

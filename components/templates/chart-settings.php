@@ -24,8 +24,15 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 				</select>
 			</p>
 			<p>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'height' ) ); ?>"><?php esc_html_e( 'Height', 'paracharts' ); ?></label><br />
-				<input type="number" name="<?php echo esc_attr( $this->get_field_name( 'height' ) ); ?>" value="<?php echo absint( $post_meta['height'] ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'height' ) ); ?>" min="300" max="1500" />
+				<label for="<?php echo esc_attr( $this->get_field_id( 'aspect' ) ); ?>"><?php esc_html_e( 'Aspect Ratio', 'paracharts' ); ?></label><br />
+				<select name="<?php echo esc_attr( $this->get_field_name( 'aspect' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'aspect' ) ); ?>">
+					<option value="1"<?php selected( $post_meta['aspect'], 1 ); ?>><?php esc_html_e( 'Square', 'paracharts' ); ?></option>
+					<option value="1.333333"<?php selected( $post_meta['aspect'], 1.333333 ); ?>><?php esc_html_e( '4:3', 'paracharts' ); ?></option>
+					<option value="1.777777"<?php selected( $post_meta['aspect'], 1.777777 ); ?>><?php esc_html_e( '16:9', 'paracharts' ); ?></option>
+					<option value="1.5"<?php selected( $post_meta['aspect'], 1.5 ); ?>><?php esc_html_e( '3:2', 'paracharts' ); ?></option>
+					<option value="1.666666"<?php selected( $post_meta['aspect'], 1.666666 ); ?>><?php esc_html_e( '5:3', 'paracharts' ); ?></option>
+					<option value="1.25"<?php selected( $post_meta['aspect'], 1.25 ); ?>><?php esc_html_e( '5:4', 'paracharts' ); ?></option>
+				</select>
 			</p>
 		</div>
 		<div class="row two">
@@ -109,11 +116,12 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 		</div>
 		<div class="row four y-min">
 			<p>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'y-min' ) ); ?>">
-					<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'y_min' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'y-min' ) ); ?>" value="1"<?php checked( $post_meta['y_min'], true ); ?>/>
-					<?php esc_html_e( 'Force vertical axis minimum: ', 'paracharts' ) ?>
-				</label>
-				<input type="text" name="<?php echo esc_attr( $this->get_field_name( 'y_min_value' ) ); ?>" value="<?php echo floatval( $post_meta['y_min_value'] ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'y-min-value' ) ); ?>" size="7" <?php echo esc_html( $y_min_disabled ); ?>/>
+				<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'y_min' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'y-min' ) ); ?>" value="1"<?php checked( $post_meta['y_min'], true ); ?>/>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'y-min' ) ); ?>"><?php esc_html_e( 'Force vertical axis minimum', 'paracharts' ) ?></label>
+			</p>
+			<p>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'y_min_value' ) ); ?>"><?php esc_html_e( 'Minimum Vertical Axis Value', 'paracharts' ) ?></label><br>
+				<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'y_min_value' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'y_min_value' ) ); ?>" value="<?php echo floatval( $post_meta['y_min_value'] ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'y-min-value' ) ); ?>" size="7" <?php echo esc_html( $y_min_disabled ); ?>/>
 			</p>
 		</div>
 		<div class="row five horizontal-axis">

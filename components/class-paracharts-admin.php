@@ -75,6 +75,13 @@ class Paracharts_Admin {
 		$validated_settings = array();
 		$submitted_settings = $_POST[ paracharts()->slug ];
 
+		/**
+		 * Filter ParaChart settings.
+		 *
+		 * @hook paracharts_default_settings
+		 *
+		 * @param {array} $settings Array of settings.
+		 */
 		$default_settings = apply_filters( 'paracharts_default_settings', paracharts()->settings );
 
 		foreach ( $default_settings as $setting => $default ) {
@@ -130,6 +137,14 @@ class Paracharts_Admin {
 		}
 
 		// Allow third party libraries to further validate the settings
+		/**
+		 * Filter the settings after validation.
+		 *
+		 * @hook paracharts_validated_settings
+		 *
+		 * @param {array} $validated_settings Array of settings after validation.
+		 * @param {array} $submitted_settings Array of settings before validation.
+		 */
 		$validated_settings = apply_filters( 'paracharts_validated_settings', $validated_settings, $submitted_settings );
 
 		update_option( paracharts()->slug, $validated_settings );
@@ -703,7 +718,14 @@ class Paracharts_Admin {
 			wp_send_json_error( esc_html__( 'Permission error', 'paracharts' ) );
 		}
 
-		$library = apply_filters( 'paracharts_library_class', paracharts()->library_class, 'paracharts' );
+		/**
+		 * Filter the characteristics of the ParaCharts class.
+		 *
+		 * @hook paracharts_library_class
+		 *
+		 * @param {Paracharts} $library_class Paracharts object characteristics.
+		 */
+		$library = apply_filters( 'paracharts_library_class', paracharts()->library_class );
 
 		// Set these values so that get_chart_args has them already available before we call it
 		$library->args             = paracharts()->get_chart_default_args;

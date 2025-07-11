@@ -83,7 +83,15 @@ class Paracharts_Parse {
 				}
 			}
 		}
-
+		/**
+		 * Filter the labels used for values.
+		 *
+		 * @hook paracharts_value_labels
+		 *
+		 * @param {array}  $labels Labels used for data.
+		 * @param {string} $labels_position Where labels come from: 'none','first_column','first_row','both'.
+		 * @param {array}  $data Chart data.
+		 */
 		$this->value_labels = apply_filters( 'paracharts_value_labels', $this->value_labels, $this->value_labels_position, $this->data );
 	}
 
@@ -141,10 +149,24 @@ class Paracharts_Parse {
 	}
 
 	/**
-	 * Checks for any suffix/prefix vales in a data_point
+	 * Checks for any suffix/prefix values in a data_point
 	 */
 	public function parse_suffix_prefix( $data_point ) {
+		/**
+		 * Filter the regex pattern used for data prefixes.
+		 *
+		 * @hook paracharts_prefix_patterns
+		 *
+		 * @param {string} $pattern The regex for prefixes.
+		 */
 		$prefix_patterns = apply_filters( 'paracharts_prefix_patterns', $this->prefix_patterns );
+		/**
+		 * Filter the regex pattern used for data suffixes.
+		 *
+		 * @hook paracharts_suffix_patterns
+		 *
+		 * @param {string} $pattern The regex for suffixes.
+		 */
 		$suffix_patterns = apply_filters( 'paracharts_suffix_patterns', $this->suffix_patterns );
 
 		if ( ! $this->data_prefix ) {
@@ -274,7 +296,15 @@ class Paracharts_Parse {
 		}
 
 		$set_data_array = $this->normalize_data_array( $set_data_array );
-
+		/**
+		 * Filter the data set saved for a chart.
+		 *
+		 * @hook paracharts_set_data
+		 *
+		 * @param {array}  $set_data The normalized data array.
+		 * @param {array}  $data The source data.
+		 * @param {string} $parse_in Whether data is parsed in rows or columns.
+		 */
 		$this->set_data = apply_filters( 'paracharts_set_data', $set_data_array, $this->data, $this->parse_in );
 	}
 
