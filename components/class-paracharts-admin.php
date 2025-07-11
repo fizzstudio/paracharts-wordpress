@@ -179,14 +179,6 @@ class Paracharts_Admin {
 		$version = ( SCRIPT_DEBUG ) ? paracharts()->version . '-' . wp_rand( 1000, 9999 ) : paracharts()->version;
 		// Only load these if we are on a post page
 		if ( 'post' == $screen->base ) {
-			// jQuery Mobile Touch Events
-			wp_enqueue_script(
-				'jquery-mobile-touch-events',
-				$this->plugin_url . '/components/external/jquery-mobile/jquery-mobile-touch-events.js',
-				array(),
-				$version
-			);
-
 			// Handsontable
 			wp_enqueue_style(
 				'handsontable',
