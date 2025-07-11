@@ -77,6 +77,9 @@
 #paracharts-spreadsheet .postbox-header {
 	border-bottom: none;
 }
+#poststuff #paracharts-spreadsheet .inside {
+	margin-top: 0;
+}
 #paracharts-spreadsheet .postbox-header h2.hndle {
 	border-bottom: none;
 	border-left: 1px solid #cdd0d4;
