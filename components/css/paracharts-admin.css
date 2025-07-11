@@ -97,19 +97,6 @@
 	background-size: contain;
 }
 
-.column-paracharts-library span.library {
-	background-position: left center;
-	background-repeat: no-repeat;
-	display: block;
-	filter: grayscale(100%);
-	text-indent: -999rem;
-	width: 100%;
-}
-.column-paracharts-library span.library.chartjs {
-	background-image: url("../external/chartjs/chartjs-logo.svg");
-	background-size: contain;
-}
-
 #paracharts-spreadsheet {
 	border-left: none;
 }

@@ -79,12 +79,6 @@ class ParachartsJs {
 		add_filter( 'paracharts_image_support', array( $this, 'paracharts_image_support' ), 10, 2 );
 		add_filter( 'paracharts_iframe_scripts', array( $this, 'paracharts_iframe_scripts' ), 10, 2 );
 
-		$this->theme_directories = array(
-			get_stylesheet_directory() . '/paracharts-chartjs-themes/', // Child theme
-			get_template_directory() . '/paracharts-chartjs-themes/', // Parent theme
-			__DIR__ . '/chartjs-themes/',
-		);
-
 		$this->type_option_names = array(
 			'line'      => __( 'Line', 'paracharts' ),
 			'stepline'  => __( 'Stepline', 'paracharts' ),
@@ -132,8 +126,6 @@ class ParachartsJs {
 		$cache_key = $post_id . '-chart-args';
 
 		if ( ! $force && $chart_args = wp_cache_get( $cache_key, paracharts()->slug ) ) {
-			$this->enqueue_chartjs_plugins();
-
 			// The width can be set via the args so we'll override whatever the cache has with the arg value
 			$chart_args['graph']['width'] = isset( $this->args['width'] ) && is_numeric( $this->args['width'] ) ? $this->args['width'] : '';
 			return $chart_args;
@@ -697,8 +689,6 @@ class ParachartsJs {
 	public function paracharts_iframe_scripts( $scripts, $post_id ) {
 
 		$type = paracharts()->get_post_meta( $post_id, 'type' );
-
-		$scripts[] = 'chartjs-datalabels';
 
 		// Return the scripts
 		return $scripts;

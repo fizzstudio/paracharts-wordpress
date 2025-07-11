@@ -219,7 +219,7 @@ class Paracharts_Admin {
 				wp_enqueue_script(
 					'paracharts-chart-admin',
 					$this->plugin_url . '/components/js/paracharts-chart-admin.js',
-					array( 'paracharts-admin', 'chartjs', 'jquery', 'wpa11y' ),
+					array( 'paracharts-admin', 'paracharts', 'jquery', 'wpa11y' ),
 					$version
 				);
 			}
