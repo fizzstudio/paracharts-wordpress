@@ -44,20 +44,18 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 				</select>
 			</p>
 			<p class="labels">
-				&nbsp;<br />
 				<label for="<?php echo esc_attr( $this->get_field_id( 'labels' ) ); ?>">
 					<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'labels' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'labels' ) ); ?>" value="1"<?php checked( $post_meta['labels'], true ); ?>/>
 					<?php esc_html_e( 'Show labels', 'paracharts' ); ?>
 				</label>
 			</p>
 			<p class="legend">
-				&nbsp;<br />
 				<label for="<?php echo esc_attr( $this->get_field_id( 'legend' ) ); ?>">
 					<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'legend' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'legend' ) ); ?>" value="1"<?php checked( $post_meta['legend'], true ); ?>/>
 					<?php esc_html_e( 'Show legend', 'paracharts' ); ?>
 				</label>
 			</p>
-			<p class="shared">&nbsp;<br />
+			<p class="shared">
 				<label for="<?php echo esc_attr( $this->get_field_id( 'shared' ) ); ?>">
 					<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'shared' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'shared' ) ); ?>" value="1"<?php checked( $post_meta['shared'], true ); ?>/>
 					<?php esc_html_e( 'Shared tooltip', 'paracharts' ); ?>
@@ -167,14 +165,14 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 	<div class="column shortcode">
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'shortcode' ) ); ?>"><?php esc_html_e( 'Shortcode', 'paracharts' ); ?></label><br />
-			<input class="input" type="text" name="<?php echo esc_attr( $this->get_field_name( 'shortcode' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'shortcode' ) ); ?>" value='[chart id="<?php echo absint( $post->ID ); ?>"]' style="width: 100%;" readonly="readonly" />
+			<input class="input widefat" type="text" name="<?php echo esc_attr( $this->get_field_name( 'shortcode' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'shortcode' ) ); ?>" value='[chart id="<?php echo absint( $post->ID ); ?>"]' readonly="readonly" />
 		</p>
 		<p class="image">
 			<label for="<?php echo esc_attr( $this->get_field_id( 'image' ) ); ?>"><?php esc_html_e( 'Image', 'paracharts' ); ?></label><br />
 			<?php
 			if ( $image ) {
 				?>
-				<input class="input" type="text" name="<?php echo esc_attr( $this->get_field_name( 'image' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'image' ) ); ?>" value="<?php echo esc_url( $image['url'] ); ?>" style="width: 100%;" readonly="readonly" />
+				<input class="input widefat" type="text" name="<?php echo esc_attr( $this->get_field_name( 'image' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'image' ) ); ?>" value="<?php echo esc_url( $image['url'] ); ?>" readonly="readonly" />
 				<a href="<?php echo esc_url( $image['url'] ); ?>" class="button" target="_blank"><?php esc_html_e( 'View', 'paracharts' ); ?></a>
 				<?php
 			} elseif ( 'default' != $settings['performance'] ) {
