@@ -44,14 +44,29 @@
 		});
 
 		// Update Units on unit type select.
-		$( document.getElementById( 'paracharts-y-units_type' ) ).on( 'select', function() {
+		$( '#paracharts-y-units_type' ).on( 'change', function() {
 			let type = $( this ).val();
-			let units = $( '#paracharts-y-units option' );
-			units.find( ':not(.' + type + ')' ).hide();
+			let units = $( '#paracharts-y-units' );
+			units.find( 'option' ).show();
+			if ( type ) {
+				let hidden = units.find( 'option:not(.' + type + ')' );
+				hidden.hide();
+			}
+		});
+
+		// Update Units on unit type select.
+		$( '#paracharts-x-units_type' ).on( 'change', function() {
+			let type = $( this ).val();
+			let units = $( '#paracharts-x-units' );
+			units.find( 'option' ).show();
+			if ( type ) {
+				let hidden = units.find( 'option:not(.' + type + ')' );
+				hidden.hide();
+			}
 		});
 
 		// Watch for clicks on the y min toggle
-		$( document.getElementById( 'paracharts-y-min' ) ).on( 'click', function () {
+		$( document.getElementById( 'paracharts-y-min' ) ).on( 'change', function () {
 			if ( $( this ).is( ':checked' ) ) {
 				paracharts_admin.$y_min_value.attr( 'disabled', false ).trigger( 'focus' );
 			} else {
@@ -101,7 +116,6 @@
 		this.sheet_tab_template = Handlebars.compile( $( document.getElementById( 'paracharts-sheet-tab' ) ).html() );
 
 		this.$spreadsheets = {};
-		console.log( 'whatsup' );
 		// hands_on_table_data is an array of data sets so we cycle through them and build a spreadsheet object for each one
 		$.each( hands_on_table_data, function( i, data ) {
 			var instance = Number( i ) + 1;

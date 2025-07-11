@@ -82,8 +82,8 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 					$selected_unit = $post_meta['y_units'];
 					$parent_name   = 'N/A';
 					if ( $selected_unit ) {
-						$term          = get_term_by( 'name', 'paracharts-units', $selected_unit );
-						$parent_name   = get_term_by( 'id', $term, 'paracharts-units' )->name;
+						$term          = get_term_by( 'name', $selected_unit, 'paracharts-units' );
+						$parent_name   = get_term_by( 'id', $term->term_id, 'paracharts-units' )->name;
 					}
 					foreach ( paracharts()->get_unit_terms() as $parent => $units ) {
 						?>
@@ -98,7 +98,7 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 			<p class="units unit">
 				<label for="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>"><?php esc_html_e( 'Units', 'paracharts' ); ?></label><br />
 				<select name='<?php echo esc_attr( $this->get_field_name( 'y_units' ) ); ?>' id="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>" class='select'>
-					<option value=""><?php esc_html_e( 'N/A', 'paracharts' ); ?></option>
+					<option value=""><?php esc_html_e( 'All', 'paracharts' ); ?></option>
 					<?php
 					foreach ( paracharts()->get_unit_terms() as $parent => $units ) {
 
@@ -132,13 +132,13 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 			<p class="units unit-type">
 				<label for="<?php echo esc_attr( $this->get_field_id( 'x-units' ) ); ?>_type"><?php esc_html_e( 'Unit Type', 'paracharts' ); ?></label><br />
 				<select name='<?php echo esc_attr( $this->get_field_name( 'x_units' ) ); ?>_type' id="<?php echo esc_attr( $this->get_field_id( 'x-units' ) ); ?>_type" class='select'>
-					<option value=""><?php esc_html_e( 'N/A', 'paracharts' ); ?></option>
+					<option value=""><?php esc_html_e( 'All', 'paracharts' ); ?></option>
 					<?php
 					$selected_unit = $post_meta['x_units'];
 					$parent_name   = 'N/A';
 					if ( $selected_unit ) {
-						$term          = get_term_by( 'name', 'paracharts-units', $selected_unit );
-						$parent_name   = get_term_by( 'id', $term, 'paracharts-units' )->name;
+						$term          = get_term_by( 'name', $selected_unit, 'paracharts-units' );
+						$parent_name   = get_term_by( 'id', $term->term_id, 'paracharts-units' )->name;
 					}
 					foreach ( paracharts()->get_unit_terms() as $parent => $units ) {
 						?>
