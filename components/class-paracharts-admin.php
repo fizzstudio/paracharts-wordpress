@@ -378,8 +378,9 @@ class Paracharts_Admin {
 			$type      = paracharts()->get_post_meta( $post_id, 'type' );
 			$type_name = paracharts()->library( 'paracharts' )->type_option_names[ $type ];
 			?>
-<span class="type <?php echo esc_attr( $type ); ?>" title="<?php echo esc_attr( $type_name ); ?>">
-			<?php echo esc_html( $type_name ); ?>
+<span class="type-name">
+	<span class="type <?php echo esc_attr( $type ); ?>" aria-hidden="true"></span>
+	<span class="type-label"><?php echo esc_html( $type_name ); ?></span>
 </span>
 			<?php
 		}

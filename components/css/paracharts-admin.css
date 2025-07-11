@@ -8,39 +8,27 @@
 	margin-left: 0;
 }
 
-.wp-list-table #paracharts-type {
-	width: 2rem;
-}
-.wp-list-table #paracharts-library {
-	width: 2.8125rem;
+.column-paracharts-type span.type-name {
+	display: flex;
+	flex-wrap:wrap;
+	gap: 4px;
+	align-items: center;
 }
 
-.column-paracharts-type span.type {
-	display: block;
-	position: relative;
-	text-indent: -999rem;
-	width: 100%;
-}
 .column-paracharts-type span.type::after {
 	background-position: left center;
 	background-repeat: no-repeat;
-	bottom: 0;
 	content: "";
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
+	display: inline-block;
+	width: 1.5rem;
+	height: 1.5rem;
 }
 .column-paracharts-type span.type.line::after {
 	background-image: url("../images/types/line.svg");
 	background-size: contain;
 }
-.column-paracharts-type span.type.spline::after {
+.column-paracharts-type span.type.stepline::after {
 	background-image: url("../images/types/spline.svg");
-	background-size: contain;
-}
-.column-paracharts-type span.type.area::after {
-	background-image: url("../images/types/area.svg");
 	background-size: contain;
 }
 .column-paracharts-type span.type.column::after {
@@ -50,10 +38,6 @@
 .column-paracharts-type span.type.stacked-column {
 	background-color: transparent;
 }
-.column-paracharts-type span.type.stacked-column::after {
-	background-image: url("../images/types/stacked-column.svg");
-	background-size: contain;
-}
 .column-paracharts-type span.type.bar {
 	background-color: transparent;
 }
@@ -61,18 +45,11 @@
 	background-image: url("../images/types/bar.svg");
 	background-size: contain;
 }
-.column-paracharts-type span.type.stacked-bar {
-	background-color: transparent;
-}
-.column-paracharts-type span.type.stacked-bar::after {
-	background-image: url("../images/types/stacked-bar.svg");
-	background-size: contain;
-}
 .column-paracharts-type span.type.pie::after {
 	background-image: url("../images/types/pie.svg");
 	background-size: contain;
 }
-.column-paracharts-type span.type.doughnut::after {
+.column-paracharts-type span.type.donut::after {
 	background-image: url("../images/types/doughnut.svg");
 	background-size: contain;
 }
@@ -80,20 +57,17 @@
 	background-image: url("../images/types/scatter.svg");
 	background-size: contain;
 }
-.column-paracharts-type span.type.bubble::after {
-	background-image: url("../images/types/bubble.svg");
+/* SVG tbd */
+.column-paracharts-type span.type.lollipop::after {
+	background-image: url("../images/types/lollipop.svg");
 	background-size: contain;
 }
-.column-paracharts-type span.type.radar::after {
-	background-image: url("../images/types/radar.svg");
+.column-paracharts-type span.type.histogram::after {
+	background-image: url("../images/types/histogram.svg");
 	background-size: contain;
 }
-.column-paracharts-type span.type.radar-area::after {
-	background-image: url("../images/types/radar-area.svg");
-	background-size: contain;
-}
-.column-paracharts-type span.type.polar::after {
-	background-image: url("../images/types/polar.svg");
+.column-paracharts-type span.type.heatmap::after {
+	background-image: url("../images/types/heatmap.svg");
 	background-size: contain;
 }
 
