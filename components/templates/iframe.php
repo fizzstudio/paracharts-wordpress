@@ -1,5 +1,5 @@
 <?php
-// Make sure we isntantiate the library so any library specific filters/setup get run
+// Make sure we instantiate the library so any library specific filters/setup get run
 $this->library( 'paracharts' );
 ?>
 <!doctype html>
