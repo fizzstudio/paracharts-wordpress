@@ -1,8 +1,8 @@
 <?php
 
 class ParachartsJs {
-	public $library            = 'chartjs';
-	public $library_name       = 'Chart.js';
+	public $library            = 'paracharts';
+	public $library_name       = 'ParaCharts';
 	public $value_labels_limit = 15;
 	public $value_labels_div   = 10;
 	public $original_labels;
@@ -11,19 +11,15 @@ class ParachartsJs {
 	public $args;
 	public $type_options      = array(
 		'line',
-		'spline',
-		'area',
+		'stepline',
 		'column',
-		'stacked-column',
 		'bar',
-		'stacked-bar',
 		'pie',
-		'doughnut',
+		'donut',
+		'heatmap',
 		'scatter',
-		'bubble',
-		'radar',
-		'radar-area',
-		'polar',
+		'histogram',
+		'lollipop',
 	);
 	public $type_option_names = array();
 	public $theme_directories;
@@ -64,22 +60,17 @@ class ParachartsJs {
 		),
 	);
 	public $chart_types    = array(
-		'column'         => 'bar',
-		'stacked-column' => 'bar',
-		'bar'            => 'bar',
-		'stacked-bar'    => 'bar',
-		'pie'            => 'pie',
-		'doughnut'       => 'doughnut',
-		'line'           => 'line',
-		'spline'         => 'line',
-		'area'           => 'line',
-		'scatter'        => 'scatter',
-		'bubble'         => 'bubble',
-		'radar'          => 'radar',
-		'radar-area'     => 'radar',
-		'polar'          => 'polarArea',
+		'line'      => 'line',
+		'stepline'  => 'stepline',
+		'column'    => 'column',
+		'bar'       => 'bar',
+		'pie'       => 'pie',
+		'donut'     => 'donut',
+		'heatmap'   => 'heatmap',
+		'scatter'   => 'scatter',
+		'histogram' => 'histogram',
+		'lollipop'  => 'lollipop',
 	);
-	public $helpers_loaded = false;
 
 	/**
 	 * Constructor
@@ -95,20 +86,16 @@ class ParachartsJs {
 		);
 
 		$this->type_option_names = array(
-			'line'           => esc_html__( 'Line', 'paracharts' ),
-			'spline'         => esc_html__( 'Spline', 'paracharts' ),
-			'area'           => esc_html__( 'Area', 'paracharts' ),
-			'column'         => esc_html__( 'Column', 'paracharts' ),
-			'stacked-column' => esc_html__( 'Stacked Column', 'paracharts' ),
-			'bar'            => esc_html__( 'Bar', 'paracharts' ),
-			'stacked-bar'    => esc_html__( 'Stacked Bar', 'paracharts' ),
-			'pie'            => esc_html__( 'Pie', 'paracharts' ),
-			'doughnut'       => esc_html__( 'Doughnut', 'paracharts' ),
-			'scatter'        => esc_html__( 'Scatter', 'paracharts' ),
-			'bubble'         => esc_html__( 'Bubble', 'paracharts' ),
-			'radar'          => esc_html__( 'Radar', 'paracharts' ),
-			'radar-area'     => esc_html__( 'Radar Area', 'paracharts' ),
-			'polar'          => esc_html__( 'Polar', 'paracharts' ),
+			'line'      => __( 'Line', 'paracharts' ),
+			'stepline'  => __( 'Stepline', 'paracharts' ),
+			'column'    => __( 'Column', 'paracharts' ),
+			'bar'       => __( 'Bar', 'paracharts' ),
+			'pie'       => __( 'Pie', 'paracharts' ),
+			'donut'     => __( 'Donut', 'paracharts' ),
+			'heatmap'   => __( 'Heatmap', 'paracharts' ),
+			'scatter'   => __( 'Scatter', 'paracharts' ),
+			'histogram' => __( 'Histogram', 'paracharts' ),
+			'lollipop'  => __( 'Lollipop', 'paracharts' ),
 		);
 	}
 
