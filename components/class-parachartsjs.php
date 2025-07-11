@@ -115,15 +115,6 @@ class ParachartsJs {
 		}
 
 		$this->post_meta = paracharts()->get_post_meta( $this->post->ID );
-
-		$this->enqueue_chartjs_plugins();
-	}
-
-	/**
-	 * Enqueue any Chart.js plugins that we'll need
-	 */
-	public function enqueue_chartjs_plugins() {
-		wp_enqueue_script( 'chartjs-datalabels' );
 	}
 
 	/**

@@ -235,36 +235,19 @@ class Paracharts {
 			)
 		);
 
-		// Register the graphing library scripts
-		wp_register_script(
-			'chartjs-helpers',
-			$this->plugin_url . '/components/js/paracharts-chart-helpers.min.js',
-			array( 'jquery' ),
-			$this->version
-		);
-
-		wp_register_script(
-			'chartjs',
-			$this->plugin_url . '/components/external/chartjs/chart.js',
-			array( 'jquery', 'chartjs-helpers' ),
-			$this->version
-		);
-
-		wp_register_script(
-			'chartjs-datalabels',
-			$this->plugin_url . '/components/external/chartjs/chartjs-plugin-datalabels.js',
-			array( 'jquery', 'chartjs' ),
+		// Register the ParaCharts module.
+		wp_register_script_module(
+			'paracharts',
+			$this->plugin_url . '/components/js/paracharts.min.js',
+			array(),
 			$this->version
 		);
 
 		// jQuery needs to be in the header since the charts are inline
-		wp_enqueue_script( 'jquery', false, array(), false, false );
+		wp_enqueue_script_module( 'paracharts' );
 
 		// Add endpoint needed for iframe embed support
 		add_rewrite_endpoint( 'embed', EP_PERMALINK );
-
-		// Check if we need to run any upgrades
-		$current_version = get_site_option( 'paracharts_version' );
 	}
 
 	/**
