@@ -17,7 +17,7 @@ class Paracharts {
 		'y_min_value' => 0,
 		'x_title'     => '',
 		'x_units'     => '',
-		'height'      => 400,
+		'aspect'      => 1,
 		'legend'      => true,
 		'source'      => '',
 		'source_url'  => '',
@@ -392,14 +392,8 @@ class Paracharts {
 					$chart_meta[ $field ] = array_values( $meta[ $field ] );
 				} elseif ( in_array( $field, array( 'labels', 'y_min', 'legend' ) ) ) {
 					$chart_meta[ $field ] = (bool) $meta[ $field ];
-				} elseif ( 'height' == $field ) {
-					$chart_meta[ $field ] = absint( $meta[ $field ] );
-
-					if ( $chart_meta[ $field ] > 1500 ) {
-						$chart_meta[ $field ] = 1500;
-					} elseif ( $chart_meta[ $field ] < 300 ) {
-						$chart_meta[ $field ] = 300;
-					}
+				} elseif ( 'aspect' == $field ) {
+					$chart_meta[ $field ] = ( is_numeric( $meta[ $field ] ) ) ? (float) $meta[ $field ] : 1;
 				} elseif ( 'y_min_value' == $field ) {
 					$chart_meta[ $field ] = floatval( $meta[ $field ] );
 				} else {
@@ -708,9 +702,7 @@ class Paracharts {
 
 		ob_start();
 		?>
-<iframe id="paracharts-container-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>"
-	class="paracharts-iframe" width="100%" height="<?php echo absint( $post_meta['height'] + 1 ); ?>"
-	src="<?php echo esc_url_raw( $src_url ); ?>" frameborder="0"></iframe>
+<iframe title="<?php echo esc_attr( get_the_title( $post_id ) ); ?>" id="paracharts-container-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>" class="paracharts-iframe" width="100%" height="600"	src="<?php echo esc_url_raw( $src_url ); ?>" frameborder="0"></iframe>
 		<?php
 		if ( 'show' == $args['share'] ) {
 			unset( $args['share'] );
