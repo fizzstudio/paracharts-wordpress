@@ -236,7 +236,17 @@ class Paracharts {
 			$this->version
 		);
 
+		// Register the ParaCharts helper.
+		wp_register_script(
+			'paracharts-helpers',
+			$this->plugin_url . '/components/js/paracharts-chart-helpers.js',
+			array(),
+			$this->version,
+			true
+		);
+
 		wp_enqueue_script_module( 'paracharts' );
+		wp_enqueue_script( 'paracharts-helpers' );
 
 		// Add endpoint needed for iframe embed support
 		add_rewrite_endpoint( 'embed', EP_PERMALINK );
@@ -368,7 +378,7 @@ class Paracharts {
 	 */
 	public function validate_post_meta( $meta ) {
 		// Need to set checkboxes before checking or they can't be deselected
-		$chart_meta['controlpanel'] = true;
+		$chart_meta['controlpanel'] = false;
 		$chart_meta['y_min']        = false;
 
 		// Filter values so we know the data is clean
@@ -534,7 +544,7 @@ class Paracharts {
 			return $this->get_chart_iframe( $post_id, $args );
 		}
 
-		wp_enqueue_script( 'paracharts' );
+		wp_enqueue_script_module( 'paracharts' );
 
 		$template = __DIR__ . '/templates/paracharts-chart.php';
 
