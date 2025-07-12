@@ -36,6 +36,7 @@ return array(
 	),
 	esc_html__( 'Other', 'paracharts' )           => array(
 		esc_html__( 'Percent', 'paracharts' ),
+		esc_html__( 'Number', 'paracharts' ),
 	),
 	esc_html__( 'Website/Traffic', 'paracharts' ) => array(
 		esc_html__( 'Visitors', 'paracharts' ),
