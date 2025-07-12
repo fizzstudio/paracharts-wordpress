@@ -137,12 +137,13 @@ class ParachartsJs {
 		// Run the parse class on the data
 		paracharts()->parse()->parse_data( $this->post_meta['data']['sets'][0], $this->post_meta['parse_in'] );
 
-		$type        = $this->post_meta['type'];
-		$description = $this->post_meta['subtitle'];
-		$x_units     = $this->post_meta['x_units'];
-		$x_axis      = $this->post_meta['x_title'];
-		$y_units     = $this->post_meta['y_units'];
-		$y_axis      = $this->post_meta['y_title'];
+		$type         = $this->post_meta['type'];
+		$description  = $this->post_meta['subtitle'];
+		$x_units      = $this->post_meta['x_units'];
+		$x_axis       = $this->post_meta['x_title'];
+		$y_units      = $this->post_meta['y_units'];
+		$y_axis       = $this->post_meta['y_title'];
+		$controlpanel = $this->post_meta['controlpanel'];
 
 		switch ( $type ) {
 			case 'column':
@@ -226,7 +227,7 @@ class ParachartsJs {
 		);
 
 		$settings = (object) array(
-			'controlPanel.isControlPanelDefaultOpen' => true,
+			'controlPanel.isControlPanelDefaultOpen' => $controlpanel,
 		);
 
 		$chart_args = (object) array(
