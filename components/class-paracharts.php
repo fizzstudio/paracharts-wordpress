@@ -31,7 +31,6 @@ class Paracharts {
 	public $parse_options = array(
 		'columns',
 		'rows',
-		'both',
 	);
 	public $options_set;
 	public $plugin_url;
@@ -46,19 +45,6 @@ class Paracharts {
 		'default_theme'    => '_default',
 		'locale'           => 'en-US',
 		'csv_delimiter'    => ',',
-		'lang_settings'    => array(
-			'decimalPoint'   => '.',
-			'thousandsSep'   => ',',
-			'numericSymbols' => array(
-				'K', // Thousands
-				'M', // Millions
-				'B', // Billions
-				'T', // Trillions
-				'P', // Quadrillions
-				'E', // Quintillions
-			),
-			'numericSymbolMagnitude' => 1000,
-		),
 	);
 	public $csv_delimiters = array(
 		','  => 'Comma',
@@ -986,9 +972,6 @@ class Paracharts {
 
 		$settings = (array) get_option( $this->slug, $default_settings );
 		$settings = wp_parse_args( $settings, $default_settings );
-
-		// Make sure the lang_settings aren't missing anything we'll be expecting later on
-		$settings['lang_settings'] = wp_parse_args( $settings['lang_settings'], $this->settings['lang_settings'] );
 
 		/**
 		 * Filter ParaCharts settings.
