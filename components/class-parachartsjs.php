@@ -126,8 +126,7 @@ class ParachartsJs {
 		$cache_key = $post_id . '-chart-args';
 
 		if ( ! $force && $chart_args = wp_cache_get( $cache_key, paracharts()->slug ) ) {
-			// The width can be set via the args so we'll override whatever the cache has with the arg value
-			$chart_args['graph']['width'] = isset( $this->args['width'] ) && is_numeric( $this->args['width'] ) ? $this->args['width'] : '';
+
 			return $chart_args;
 		}
 
@@ -138,86 +137,78 @@ class ParachartsJs {
 		// Run the parse class on the data
 		paracharts()->parse()->parse_data( $this->post_meta['data']['sets'][0], $this->post_meta['parse_in'] );
 
-		$type = $this->post_meta['type'];
+		$type        = $this->post_meta['type'];
+		$description = $this->post_meta['subtitle'];
 
-		$chart_args = array(
-			'type'    => $this->chart_types[ $type ],
-			'options' => array(
-				'plugins'             => array(
-					'title'   => array(
-						'display' => true,
-						'text'    => $this->esc_title( apply_filters( 'the_title', $this->post->post_title, $this->post->ID ) ),
-						'font'    => array(
-							'size'   => 21,
-							'weight' => 'normal',
-						),
-						'padding' => array(
-							'bottom' => 15,
-						),
-					),
-					'legend'  => array(
-						'display'  => true,
-						'position' => 'bottom',
-						'labels'   => array(
-							'font'          => array(
-								'weight' => 'bold',
-							),
-							'usePointStyle' => true,
-						),
-					),
-					'tooltip' => array(
-						'enabled' => true,
-					),
-				),
-				'elements'            => array(
-					'point' => array(
-						'hoverRadius' => 7,
-						'hitRadius'   => 13,
-					),
-				),
-				'responsive'          => true,
-				'maintainAspectRatio' => false,
-				'locale'              => paracharts()->get_settings( 'locale' ),
+		// Generate the manifest data for the chart.
+		$x_facet = (object) array(
+			'label'        => 'Kind of energy',
+			'variableType' => 'independent',
+			'measure'      => 'nominal',
+			'datatype'     => 'string',
+			'displayType'  => (object) array(
+				'type' => 'marking',
 			),
 		);
 
-		// Subtitles are handled by a plugin so we have to conditionally set these values
-		if ( '' != $this->post_meta['subtitle'] ) {
-			$chart_args['options']['plugins']['title']['padding']['bottom'] = 10;
+		$y_facet = (object) array(
+			'label'        => 'Proportion of total energy in the Universe',
+			'variableType' => 'dependent',
+			'measure'      => 'ratio',
+			'datatype'     => 'number',
+			'multiplier'   => 0.01,
+			'displayType'  => (object) array(
+				'type' => 'angle',
+			),
+		);
 
-			$chart_args['options']['plugins']['subtitle'] = array(
-				'display' => true,
-				'text'    => $this->esc_title( $this->post_meta['subtitle'] ),
-				'font'    => array(
-					'size'   => 18,
-					'weight' => 'normal',
+		// Not sure how to use this yet.
+		$labels_array = $this->get_value_labels_array();
+		$records      = $this->get_data_sets( $labels_array );
+
+		$series = array(
+			(object) array(
+				'key'     => $this->esc_title( $description ),
+				'theme'   => (object) array(
+					'baseQuantity' => 'energy',
+					'baseKind'     => 'proportion',
+					'entity'       => 'the Universe',
+					'aggregate'    => 'total',
 				),
-				'padding' => array(
-					'bottom' => 15,
+				'records' => $records,
+				/*'records' => array(
+					(object) array( 'x' => 'Dark Energy', 'y' => '73' ),
+					(object) array( 'x' => 'Dark Matter', 'y' => '23' ),
+					(object) array( 'x' => 'Nonluminous Matter', 'y' => '3.6' ),
+					(object) array( 'x' => 'Luminous Matter', 'y' => '0.4' ),
+				),*/
+			),
+		);
+
+		$data = (object) array(
+			'source' => 'inline',
+		);
+
+		$settings = (object) array(
+			'controlPanel.isControlPanelDefaultOpen' => true,
+		);
+
+		$chart_args = (object) array(
+			'datasets' => array(
+				(object) array(
+					'type'     => $this->chart_types[ $type ],
+					'title'    => $this->esc_title( apply_filters( 'the_title', $this->post->post_title, $this->post->ID ) ),
+					'facets'   => (object) array(
+						'x' => $x_facet,
+						'y' => $y_facet,
+					),
+					'series'   => $series,
+					'data'     => $data,
+					'settings' => $settings,
 				),
-			);
-		}
-
-		// If we're in the admin panel we need to bump up the devicePixelRatio to get a better image
-		if ( is_admin() ) {
-			$chart_args['options']['devicePixelRatio'] = paracharts()->get_settings( 'image_multiplier' );
-		}
-
-		if (
-			   'pie' != $chart_args['type']
-			&& 'doughnut' != $chart_args['type']
-			&& 'radar' != $chart_args['type']
-			&& 'polarArea' != $chart_args['type']
-		) {
-			$chart_args['options']['scales']['x']['grid']['borderWidth'] = 0;
-			$chart_args['options']['scales']['y']['grid']['borderWidth'] = 0;
-		}
-
-		if ( $this->post_meta['shared'] ) {
-			$chart_args['options']['plugins']['tooltip']['mode'] = 'index';
-			$chart_args['options']['interaction']['mode']        = 'index';
-		}
-
+			),
+		);
+	
 		// Forcing a minimum value of 0 prevents the built in fudging which sometimes looks weird
 		if (
 			$this->post_meta['y_min']
@@ -227,178 +218,9 @@ class ParachartsJs {
 				|| 'area' == $type
 			)
 		) {
-			$chart_args['options']['scales']['y']['min'] = $this->post_meta['y_min_value'];
+			// Need to figure out how this correlates in manifest.
+			// $chart_args['options']['scales']['y']['min'] = $this->post_meta['y_min_value'];
 		}
-
-		$chart_args['data']['labels'] = $this->get_value_labels_array();
-
-		if (
-			   'pie' != $chart_args['type']
-			&& 'doughnut' != $chart_args['type']
-			&& 'radar' != $chart_args['type']
-			&& 'polarArea' != $chart_args['type']
-		) {
-			$chart_args = $this->add_axis_labels( $chart_args );
-		}
-
-		if (
-			   'bar' == $type
-			|| 'stacked-bar' == $type
-		) {
-			$chart_args['options']['indexAxis']                          = 'y';
-			$chart_args['options']['scales']['y']['grid']['display']     = false;
-			$chart_args['options']['scales']['y']['grid']['borderWidth'] = 0;
-		} elseif (
-			   'pie' != $chart_args['type']
-			&& 'doughnut' != $chart_args['type']
-			&& 'radar' != $chart_args['type']
-			&& 'polarArea' != $chart_args['type']
-		) {
-			$chart_args['options']['scales']['x']['grid']['display'] = false;
-		}
-
-		if (
-			   'stacked-bar' == $type
-			|| 'stacked-column' == $type
-		) {
-			$chart_args['options']['scales']['x']['stacked'] = true;
-			$chart_args['options']['scales']['y']['stacked'] = true;
-		}
-
-		$chart_args = $this->add_data_sets( $chart_args );
-
-		// Add some stuff for the helper class
-		$chart_args['value_prefix'] = paracharts()->parse()->data_prefix;
-		$chart_args['value_suffix'] = paracharts()->parse()->data_suffix;
-		$chart_args['locale']       = paracharts()->get_settings( 'locale' );
-		$chart_args['labels_pos']   = paracharts()->parse()->value_labels_position;
-
-		// Chart.js 3.x.x requires at least some form of data set (even if it's empty) or the chart object doesn't get generated
-		if ( ! isset( $chart_args['data']['datasets'] ) ) {
-			$chart_args['data']['datasets'] = array(
-				array(
-					'label' => '',
-					'data'  => array(),
-				),
-			);
-		}
-
-		$this->colors = apply_filters( 'paracharts_colors', $this->colors, $this->post );
-		$this->points = apply_filters( 'paracharts_points', $this->points, $this->post );
-
-		// It's possible to have more data points/sets than colors or point styles so we need to perform a modulo operation when iterating through them
-		$color_count = count( $this->colors );
-		$point_count = count( $this->points );
-
-		// Apply colors and point styles, yes this kind of sucks, but so does the Chart.js color system
-		if (
-			   isset( $chart_args['data']['datasets'] )
-			&& ( 'bar' == $chart_args['type'] || 'horizontalBar' == $chart_args['type'] )
-		) {
-			foreach ( $chart_args['data']['datasets'] as $key => $dataset ) {
-				$chart_args['data']['datasets'][ $key ]['backgroundColor'] = $this->colors[ $key % $color_count ];
-
-				if (
-						'stacked-column' == $this->post_meta['type']
-					|| 'stacked-bar' == $this->post_meta['type']
-				) {
-					$chart_args['data']['datasets'][ $key ]['datalabels'] = array(
-						'align'  => 'center',
-						'anchor' => 'center',
-						'color'  => '#ffffff',
-					);
-				} else {
-					$chart_args['data']['datasets'][ $key ]['datalabels'] = array(
-						'align'  => 'end',
-						'anchor' => 'end',
-						'color'  => $this->colors[ $key % $color_count ],
-					);
-				}
-			}
-		} elseif (
-			   isset( $chart_args['data']['datasets'] )
-			&& (
-				  'pie' == $chart_args['type']
-			   || 'doughnut' == $chart_args['type']
-			)
-		) {
-			foreach ( $chart_args['data']['datasets'][0]['data'] as $key => $data ) {
-				$chart_args['data']['datasets'][0]['backgroundColor'][ $key ] = $this->colors[ $key % $color_count ];
-
-				$chart_args['data']['datasets'][0]['datalabels'] = array(
-					'align'  => 'end',
-					'anchor' => 'end',
-					'color'  => $this->colors,
-				);
-			}
-		} elseif (
-			   isset( $chart_args['data']['datasets'] )
-			&& 'polarArea' == $chart_args['type']
-		) {
-			$chart_args['data']['datasets'][0]['backgroundColor'] = $this->colors;
-
-			$chart_args['data']['datasets'][0]['datalabels'] = array(
-				'align'  => 'end',
-				'anchor' => 'end',
-				'color'  => $this->colors,
-			);
-		} elseif ( isset( $chart_args['data']['datasets'] ) ) {
-			foreach ( $chart_args['data']['datasets'] as $key => $dataset ) {
-				$color = $this->colors[ $key % $color_count ];
-
-				$chart_args['data']['datasets'][ $key ]['backgroundColor'] = $color;
-				$chart_args['data']['datasets'][ $key ]['borderColor']     = $color;
-
-				if ( 'spline' == $this->post_meta['type'] ) {
-					$chart_args['data']['datasets'][ $key ]['lineTension'] = 0.25;
-				} else {
-					$chart_args['data']['datasets'][ $key ]['lineTension'] = 0;
-				}
-
-				if (
-					   'line' == $this->post_meta['type']
-					|| 'spline' == $this->post_meta['type']
-					|| 'area' == $this->post_meta['type']
-					|| 'radar' == $this->post_meta['type']
-					|| 'radar-area' == $this->post_meta['type']
-					|| 'scatter' == $this->post_meta['type']
-				) {
-					$chart_args['data']['datasets'][ $key ]['elements'] = $this->points[ $key % $point_count ];
-				}
-
-				if (
-					   'area' == $this->post_meta['type']
-					|| 'bubble' == $this->post_meta['type']
-					|| 'radar-area' == $this->post_meta['type']
-				) {
-					$rgb = $this->hex_to_rgb( $color );
-
-					$chart_args['data']['datasets'][ $key ]['backgroundColor']                      = 'rgba( ' . implode( ', ', $rgb ) . ', .5 )';
-					$chart_args['data']['datasets'][ $key ]['elements']['point']['backgroundColor'] = $color;
-					$chart_args['data']['datasets'][ $key ]['fill']                                 = true;
-				} else {
-					$chart_args['data']['datasets'][ $key ]['fill'] = false;
-				}
-
-				$chart_args['data']['datasets'][ $key ]['datalabels'] = array(
-					'align'  => 'end',
-					'anchor' => 'end',
-					'color'  => $color,
-				);
-			}
-		}
-
-		// Data labels are handled by a plugin so we have to conditionally set these values
-		$chart_args['options']['plugins']['datalabels']['display'] = false;
-
-		$chart_args['options']['plugins']['datalabels'] = array(
-			'color'   => 'black',
-			'font'    => array(
-				'weight' => 'bold',
-			),
-			'offset'  => 3,
-			'display' => 'auto',
-		);
 
 		/**
 		 * Filter a chart's display arguments.
@@ -519,150 +341,27 @@ class ParachartsJs {
 
 	/**
 	 * Handle adding data sets to the chart args
-	 *
-	 * @param array the current array of chart args
+	 * 
+	 * @param array $labels Array of labels for data points.
 	 *
 	 * @return array the chart args array with data sets added to it
 	 */
-	public function add_data_sets( $chart_args ) {
-		// When Chart.js encounters an empty data value it stops so we set them to NULL
-		$data_array = array_map( array( $this, 'fix_null_values' ), paracharts()->parse()->set_data );
-
-		if (
-			   'pie' == $this->post_meta['type']
-			|| 'doughnut' == $chart_args['type']
-			|| 'polar' == $this->post_meta['type']
-			|| 'both' != paracharts()->parse()->value_labels_position
-			&& (
-				   'scatter' != $this->post_meta['type']
-				&& 'bubble' != $this->post_meta['type']
-				&& 'radar' != $this->post_meta['type']
-				&& 'radar-area' != $this->post_meta['type']
-			)
-		) {
-			foreach ( $chart_args['data']['labels'] as $key => $label ) {
-				if ( isset( $data_array[ $key ] ) ) {
-					$chart_args['data']['datasets'][0]['data'][] = $data_array[ $key ];
-				}
-			}
-		} elseif (
-			   'radar' == $this->post_meta['type']
-			|| 'radar-area' == $this->post_meta['type']
-		) {
-			$set_names = $this->post_meta['set_names'];
-
-			foreach ( $this->post_meta['data']['sets'] as $key => $data ) {
-				$parse = paracharts()->parse()->parse_data( $data, $this->post_meta['parse_in'] );
-
-				$data_array = array_map( array( $this, 'fix_null_values' ), $parse->set_data );
-
-				$chart_args['data']['datasets'][ $key ] = array(
-					'label' => isset( $set_names[ $key ] ) ? $set_names[ $key ] : 'Sheet 1',
-					'data'  => $data_array,
+	public function get_data_sets( $labels ) {
+		$data_array  = array_map( array( $this, 'fix_null_values' ), paracharts()->parse()->set_data );
+		$count       = count( $labels );
+		$data_arrays = array_chunk( $data_array, $count, false );
+		$records     = array();
+		foreach ( $data_arrays as $array ) {
+			foreach ( $array as $key => $point ) {
+				$data_point = (object) array(
+					'x' => $labels[ $key % $count ],
+					'y' => $point,
 				);
+				$records[] = $data_point;
 			}
-		} elseif ( 'scatter' == $this->post_meta['type'] ) {
-			$set_names = $this->post_meta['set_names'];
-
-			foreach ( $this->post_meta['data']['sets'] as $key => $data ) {
-				$parse = paracharts()->parse()->parse_data( $data, $this->post_meta['parse_in'] );
-
-				$data_array = array_map( array( $this, 'fix_null_values' ), $parse->set_data );
-
-				$new_data_array = array();
-
-				$label_key = ( $this->post_meta['parse_in'] == 'rows' ) ? 'first_column' : 'first_row';
-
-				if ( 'both' == $parse->value_labels_position ) {
-					foreach ( $data_array as $data_key => $data ) {
-						$new_data_array[] = array(
-							'x'     => $data[0],
-							'y'     => $data[1],
-							'label' => $parse->value_labels[ $label_key ][ $data_key ],
-						);
-					}
-				} else {
-					foreach ( $data_array as $data_key => $data ) {
-						if ( $data_key % 2 ) {
-							continue;
-						}
-
-						$new_data_array[] = array(
-							'x' => $data,
-							'y' => $data_array[ $data_key + 1 ],
-						);
-					}
-				}
-
-				$chart_args['data']['datasets'][ $key ] = array(
-					'label' => isset( $set_names[ $key ] ) ? $set_names[ $key ] : 'Sheet 1',
-					'data'  => $new_data_array,
-				);
-			}
-		} elseif ( 'bubble' == $this->post_meta['type'] ) {
-			$set_names = $this->post_meta['set_names'];
-
-			foreach ( $this->post_meta['data']['sets'] as $key => $data ) {
-				$parse = paracharts()->parse()->parse_data( $data, $this->post_meta['parse_in'] );
-
-				$data_array = array_map( array( $this, 'fix_null_values' ), $parse->set_data );
-
-				$new_data_array = array();
-
-				$label_key = ( $this->post_meta['parse_in'] == 'rows' ) ? 'first_column' : 'first_row';
-
-				if ( 'both' == $parse->value_labels_position ) {
-					foreach ( $data_array as $data_key => $data ) {
-						$new_data_array[] = array(
-							'x'     => $data[0],
-							'y'     => $data[1],
-							'r'     => $data[2],
-							'label' => $parse->value_labels[ $label_key ][ $data_key ],
-						);
-					}
-				} else {
-					foreach ( $data_array as $data_key => $data ) {
-						if ( $data_key % 2 ) {
-							continue;
-						}
-
-						$new_data_array[] = array(
-							'x' => $data,
-							'y' => $data_array[ $data_key + 1 ],
-							'r' => $data_array[ $data_key + 2 ],
-						);
-					}
-				}
-
-				$chart_args['data']['datasets'][ $key ] = array(
-					'label' => isset( $set_names[ $key ] ) ? $set_names[ $key ] : 'Sheet 1',
-					'data'  => $new_data_array,
-				);
-			}
-		} else {
-			$set_data = array();
-
-			$label_key = ( $this->post_meta['parse_in'] == 'rows' ) ? 'first_column' : 'first_row';
-
-			foreach ( $data_array as $key => $data_chunk ) {
-				$set_data[ $key ] = array(
-					'label' => paracharts()->parse()->value_labels[ $label_key ][ $key ],
-					'data'  => array(),
-				);
-
-				if ( is_array( $data_chunk ) ) {
-					foreach ( $data_chunk as $data ) {
-						$set_data[ $key ]['data'][] = $data;
-					}
-				} else {
-					$set_data[ $key ]['data'] = array();
-				}
-			}
-
-			$chart_args['data']['datasets'] = $set_data;
 		}
 
-		return $chart_args;
+		return $records;
 	}
 
 	/**
