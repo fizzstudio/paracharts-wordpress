@@ -337,15 +337,6 @@ class Paracharts_Parse {
 				}
 			}
 		}
-		//else {
-		//	$label_count = count( $this->value_labels ) - 1;
-		//
-		//	foreach ( $data_array as $key => $data ) {
-		//		if ( $key > $label_count ) {
-		//			unset( $data_array[ $key ] );
-		//		}
-		//	}
-		//}
 
 		return $data_array;
 	}

@@ -141,7 +141,7 @@ class ParachartsJs {
 		$type = $this->post_meta['type'];
 
 		$chart_args = array(
-			'type'    => $this->chart_types[ $this->post_meta['type'] ],
+			'type'    => $this->chart_types[ $type ],
 			'options' => array(
 				'plugins'             => array(
 					'title'   => array(
@@ -156,7 +156,7 @@ class ParachartsJs {
 						),
 					),
 					'legend'  => array(
-						'display'  => $this->post_meta['legend'] ? true : false,
+						'display'  => true,
 						'position' => 'bottom',
 						'labels'   => array(
 							'font'          => array(
@@ -222,18 +222,12 @@ class ParachartsJs {
 		if (
 			$this->post_meta['y_min']
 			&& (
-				   'line' == $this->post_meta['type']
-				|| 'spline' == $this->post_meta['type']
-				|| 'area' == $this->post_meta['type']
+				   'line' == $type
+				|| 'spline' == $type
+				|| 'area' == $type
 			)
 		) {
 			$chart_args['options']['scales']['y']['min'] = $this->post_meta['y_min_value'];
-		}
-
-		// @TODO: Bubble charts need a little massaging to look better by default (not sure how to properly do this yet)
-		if ( 'bubble' == $this->post_meta['type'] ) {
-			//$chart_args['options']['scales']['x']['min'] = -15;
-			//$chart_args['options']['scales']['y']['min'] = -15;
 		}
 
 		$chart_args['data']['labels'] = $this->get_value_labels_array();
@@ -248,8 +242,8 @@ class ParachartsJs {
 		}
 
 		if (
-			   'bar' == $this->post_meta['type']
-			|| 'stacked-bar' == $this->post_meta['type']
+			   'bar' == $type
+			|| 'stacked-bar' == $type
 		) {
 			$chart_args['options']['indexAxis']                          = 'y';
 			$chart_args['options']['scales']['y']['grid']['display']     = false;
@@ -264,20 +258,14 @@ class ParachartsJs {
 		}
 
 		if (
-			   'stacked-bar' == $this->post_meta['type']
-			|| 'stacked-column' == $this->post_meta['type']
+			   'stacked-bar' == $type
+			|| 'stacked-column' == $type
 		) {
 			$chart_args['options']['scales']['x']['stacked'] = true;
 			$chart_args['options']['scales']['y']['stacked'] = true;
 		}
 
 		$chart_args = $this->add_data_sets( $chart_args );
-
-		// This doesn't do anything unless the datalabels plugin is active but we need to set it later
-		//$chart_args['data']['datasets']['datalabels'] = array(
-		//	'align'  => 'end',
-		//	'anchor' => 'end',
-		//);
 
 		// Add some stuff for the helper class
 		$chart_args['value_prefix'] = paracharts()->parse()->data_prefix;
@@ -310,23 +298,21 @@ class ParachartsJs {
 			foreach ( $chart_args['data']['datasets'] as $key => $dataset ) {
 				$chart_args['data']['datasets'][ $key ]['backgroundColor'] = $this->colors[ $key % $color_count ];
 
-				if ( true == $this->post_meta['labels'] ) {
-					if (
-						   'stacked-column' == $this->post_meta['type']
-						|| 'stacked-bar' == $this->post_meta['type']
-					) {
-						$chart_args['data']['datasets'][ $key ]['datalabels'] = array(
-							'align'  => 'center',
-							'anchor' => 'center',
-							'color'  => '#ffffff',
-						);
-					} else {
-						$chart_args['data']['datasets'][ $key ]['datalabels'] = array(
-							'align'  => 'end',
-							'anchor' => 'end',
-							'color'  => $this->colors[ $key % $color_count ],
-						);
-					}
+				if (
+						'stacked-column' == $this->post_meta['type']
+					|| 'stacked-bar' == $this->post_meta['type']
+				) {
+					$chart_args['data']['datasets'][ $key ]['datalabels'] = array(
+						'align'  => 'center',
+						'anchor' => 'center',
+						'color'  => '#ffffff',
+					);
+				} else {
+					$chart_args['data']['datasets'][ $key ]['datalabels'] = array(
+						'align'  => 'end',
+						'anchor' => 'end',
+						'color'  => $this->colors[ $key % $color_count ],
+					);
 				}
 			}
 		} elseif (
@@ -339,13 +325,11 @@ class ParachartsJs {
 			foreach ( $chart_args['data']['datasets'][0]['data'] as $key => $data ) {
 				$chart_args['data']['datasets'][0]['backgroundColor'][ $key ] = $this->colors[ $key % $color_count ];
 
-				if ( true == $this->post_meta['labels'] ) {
-					$chart_args['data']['datasets'][0]['datalabels'] = array(
-						'align'  => 'end',
-						'anchor' => 'end',
-						'color'  => $this->colors,
-					);
-				}
+				$chart_args['data']['datasets'][0]['datalabels'] = array(
+					'align'  => 'end',
+					'anchor' => 'end',
+					'color'  => $this->colors,
+				);
 			}
 		} elseif (
 			   isset( $chart_args['data']['datasets'] )
@@ -353,13 +337,11 @@ class ParachartsJs {
 		) {
 			$chart_args['data']['datasets'][0]['backgroundColor'] = $this->colors;
 
-			if ( true == $this->post_meta['labels'] ) {
-				$chart_args['data']['datasets'][0]['datalabels'] = array(
-					'align'  => 'end',
-					'anchor' => 'end',
-					'color'  => $this->colors,
-				);
-			}
+			$chart_args['data']['datasets'][0]['datalabels'] = array(
+				'align'  => 'end',
+				'anchor' => 'end',
+				'color'  => $this->colors,
+			);
 		} elseif ( isset( $chart_args['data']['datasets'] ) ) {
 			foreach ( $chart_args['data']['datasets'] as $key => $dataset ) {
 				$color = $this->colors[ $key % $color_count ];
@@ -398,29 +380,25 @@ class ParachartsJs {
 					$chart_args['data']['datasets'][ $key ]['fill'] = false;
 				}
 
-				if ( true == $this->post_meta['labels'] ) {
-					$chart_args['data']['datasets'][ $key ]['datalabels'] = array(
-						'align'  => 'end',
-						'anchor' => 'end',
-						'color'  => $color,
-					);
-				}
+				$chart_args['data']['datasets'][ $key ]['datalabels'] = array(
+					'align'  => 'end',
+					'anchor' => 'end',
+					'color'  => $color,
+				);
 			}
 		}
 
 		// Data labels are handled by a plugin so we have to conditionally set these values
 		$chart_args['options']['plugins']['datalabels']['display'] = false;
 
-		if ( true == $this->post_meta['labels'] ) {
-			$chart_args['options']['plugins']['datalabels'] = array(
-				'color'   => 'black',
-				'font'    => array(
-					'weight' => 'bold',
-				),
-				'offset'  => 3,
-				'display' => 'auto',
-			);
-		}
+		$chart_args['options']['plugins']['datalabels'] = array(
+			'color'   => 'black',
+			'font'    => array(
+				'weight' => 'bold',
+			),
+			'offset'  => 3,
+			'display' => 'auto',
+		);
 
 		/**
 		 * Filter a chart's display arguments.

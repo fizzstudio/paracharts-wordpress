@@ -50,16 +50,10 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 					?>
 				</select>
 			</p>
-			<p class="labels">
-				<label for="<?php echo esc_attr( $this->get_field_id( 'labels' ) ); ?>">
-					<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'labels' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'labels' ) ); ?>" value="1"<?php checked( $post_meta['labels'], true ); ?>/>
-					<?php esc_html_e( 'Show labels', 'paracharts' ); ?>
-				</label>
-			</p>
-			<p class="legend">
-				<label for="<?php echo esc_attr( $this->get_field_id( 'legend' ) ); ?>">
-					<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'legend' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'legend' ) ); ?>" value="1"<?php checked( $post_meta['legend'], true ); ?>/>
-					<?php esc_html_e( 'Show legend', 'paracharts' ); ?>
+			<p class="controlpanel">
+				<label for="<?php echo esc_attr( $this->get_field_id( 'controlpanel' ) ); ?>">
+					<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'controlpanel' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'controlpanel' ) ); ?>" value="1"<?php checked( $post_meta['controlpanel'], true ); ?>/>
+					<?php esc_html_e( 'Show Control Panel', 'paracharts' ); ?>
 				</label>
 			</p>
 			<p class="shared">

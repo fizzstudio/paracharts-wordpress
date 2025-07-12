@@ -5,24 +5,23 @@ class Paracharts {
 	public $slug              = 'paracharts';
 	public $plugin_name       = 'Chart';
 	public $chart_meta_fields = array(
-		'library'     => 'paracharts',
-		'type'        => 'line',
-		'parse_in'    => 'rows',
-		'labels'      => true,
-		'shared'      => false,
-		'subtitle'    => '',
-		'y_title'     => '',
-		'y_units'     => '',
-		'y_min'       => false,
-		'y_min_value' => 0,
-		'x_title'     => '',
-		'x_units'     => '',
-		'aspect'      => 1,
-		'legend'      => true,
-		'source'      => '',
-		'source_url'  => '',
-		'data'        => array(),
-		'set_names'   => array(),
+		'library'      => 'paracharts',
+		'type'         => 'line',
+		'parse_in'     => 'rows',
+		'shared'       => false,
+		'subtitle'     => '',
+		'y_title'      => '',
+		'y_units'      => '',
+		'y_min'        => false,
+		'controlpanel' => true,
+		'y_min_value'  => 0,
+		'x_title'      => '',
+		'x_units'      => '',
+		'aspect'       => 1,
+		'source'       => '',
+		'source_url'   => '',
+		'data'         => array(),
+		'set_names'    => array(),
 	);
 	public $get_chart_default_args = array(
 		'show'  => 'chart',
@@ -249,7 +248,6 @@ class Paracharts {
 			$this->version
 		);
 
-		// jQuery needs to be in the header since the charts are inline
 		wp_enqueue_script_module( 'paracharts' );
 
 		// Add endpoint needed for iframe embed support
@@ -300,12 +298,9 @@ class Paracharts {
 	 */
 	public function get_post_meta( $post_id, $field = false ) {
 		$raw_post_meta = get_post_meta( $post_id, $this->slug, true );
-
-		$post_meta = $raw_post_meta;
-
-		$defaults = $this->chart_meta_fields;
-
-		$post_meta = wp_parse_args( $post_meta, $defaults );
+		$post_meta     = $raw_post_meta;
+		$defaults      = $this->chart_meta_fields;
+		$post_meta     = wp_parse_args( $post_meta, $defaults );
 
 		// Theme default is based off of an option so we'll handle that here
 		if ( ! isset( $post_meta['theme'] ) ) {
@@ -384,9 +379,8 @@ class Paracharts {
 	 */
 	public function validate_post_meta( $meta ) {
 		// Need to set checkboxes before checking or they can't be deselected
-		$chart_meta['labels'] = false;
-		$chart_meta['y_min']  = false;
-		$chart_meta['legend'] = false;
+		$chart_meta['controlpanel'] = true;
+		$chart_meta['y_min']        = false;
 
 		// Filter values so we know the data is clean
 		foreach ( $this->chart_meta_fields as $field => $default ) {
@@ -397,7 +391,7 @@ class Paracharts {
 					$chart_meta[ $field ]['sets'] = $meta[ $field ];
 				} elseif ( 'set_names' == $field ) {
 					$chart_meta[ $field ] = array_values( $meta[ $field ] );
-				} elseif ( in_array( $field, array( 'labels', 'y_min', 'legend' ) ) ) {
+				} elseif ( in_array( $field, array( 'controlpanel', 'y_min' ) ) ) {
 					$chart_meta[ $field ] = (bool) $meta[ $field ];
 				} elseif ( 'aspect' == $field ) {
 					$chart_meta[ $field ] = ( is_numeric( $meta[ $field ] ) ) ? (float) $meta[ $field ] : 1;
