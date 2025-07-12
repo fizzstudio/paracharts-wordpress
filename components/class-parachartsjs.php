@@ -146,9 +146,13 @@ class ParachartsJs {
 		$controlpanel = $this->post_meta['controlpanel'];
 
 		switch ( $type ) {
-			case 'column':
+			case 'column': // not working.
 			case 'line':
 			case 'pie':
+			case 'stepline': // What's the difference between line and stepline?
+			case 'heatmap': // hypothesizing; not working.
+			case 'scatter': // hypothesizing; not working.
+			case 'histogram': // hypothesizing; not working.
 				$x_display_type = array(
 					'type'        => 'axis',
 					'orientation' => 'horizontal',
@@ -159,6 +163,7 @@ class ParachartsJs {
 				);
 				break;
 			case 'donut':
+			case 'lollipop': // hypothesizing; not working.
 				$x_display_type = array(
 					'type' => 'marking',
 				);
@@ -166,7 +171,7 @@ class ParachartsJs {
 					'type' => 'angle',
 				);
 				break;
-			case 'bar':
+			case 'bar': // not working.
 				$x_display_type = array(
 					'type'        => 'axis',
 					'orientation' => 'vertical',
