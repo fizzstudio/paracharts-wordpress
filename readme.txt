@@ -1,7 +1,7 @@
-=== ParaCarts for WordPress ===
+=== ParaCharts for WordPress ===
 Contributors: joedolson
 Tags: paracharts, graphs, charts, data, wcag
-Requires at least: 6.4
+Requires at least: 6.5
 Tested up to: 6.8
 Stable tag: 0.1.0
 License: MIT
