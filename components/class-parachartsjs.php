@@ -22,43 +22,7 @@ class ParachartsJs {
 		'lollipop',
 	);
 	public $type_option_names = array();
-	public $theme_directories;
-	public $colors         = array(
-		'#ed6d85', // Pink
-		'#f7d06b', // Yellow
-		'#f2a354', // Orange
-		'#56a0e5', // Blue
-		'#6cbebf', // Turquoise
-		'#47494b', // Gray
-	);
-	public $points         = array(
-		array(
-			'point' => array(
-				'pointStyle' => 'circle',
-			),
-		),
-		array(
-			'point' => array(
-				'pointStyle' => 'rectRot',
-			),
-		),
-		array(
-			'point' => array(
-				'pointStyle' => 'rect',
-			),
-		),
-		array(
-			'point' => array(
-				'pointStyle' => 'triangle',
-			),
-		),
-		array(
-			'point' => array(
-				'pointStyle' => 'triangle',
-				'rotation'   => 180,
-			),
-		),
-	);
+
 	public $chart_types    = array(
 		'line'      => 'line',
 		'stepline'  => 'stepline',
@@ -144,6 +108,7 @@ class ParachartsJs {
 		$y_units      = $this->post_meta['y_units'];
 		$y_axis       = $this->post_meta['y_title'];
 		$controlpanel = $this->post_meta['controlpanel'];
+		$y_min        = $this->post_meta['y_min'];
 
 		switch ( $type ) {
 			case 'column': // not working.
@@ -182,6 +147,9 @@ class ParachartsJs {
 				);
 				break;
 		}
+		if ( $y_min ) {
+			$y_display_type['minDisplayed'] = $y_min;
+		}
 
 		// Generate the manifest data for the chart.
 		$x_facet = (object) array(
@@ -192,7 +160,6 @@ class ParachartsJs {
 			'units'        => $x_units,
 			'displayType'  => (object) $x_display_type,
 		);
-
 
 		$y_facet = (object) array(
 			'label'        => $y_axis,
