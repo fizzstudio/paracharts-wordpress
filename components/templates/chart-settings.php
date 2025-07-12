@@ -2,6 +2,7 @@
 $parse_option_names = array(
 	'columns' => esc_html__( 'Columns', 'paracharts' ),
 	'rows'    => esc_html__( 'Rows', 'paracharts' ),
+	'both'    => esc_html__( 'Both', 'paracharts' ),
 );
 
 $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';

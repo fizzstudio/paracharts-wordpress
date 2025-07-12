@@ -31,6 +31,7 @@ class Paracharts {
 	public $parse_options = array(
 		'columns',
 		'rows',
+		'both',
 	);
 	public $options_set;
 	public $plugin_url;
@@ -83,6 +84,7 @@ class Paracharts {
 		add_action( 'shortcode_ui_before_do_shortcode', array( $this, 'shortcode_ui_before_do_shortcode' ) );
 		// Doing this early as possible because it sets is_iframe which we might need to use for other things
 		add_action( 'template_redirect', array( $this, 'template_redirect' ), 0 );
+		add_action( 'template_redirect', array( $this, 'render_manifest' ), 0 );
 		add_action( 'paracharts_update_post_meta', array( $this, 'paracharts_update_post_meta' ), 10, 2 );
 
 		// Doing this before the default so it's already done before anything else
@@ -252,6 +254,7 @@ class Paracharts {
 
 		// Add endpoint needed for iframe embed support
 		add_rewrite_endpoint( 'embed', EP_PERMALINK );
+		add_rewrite_endpoint( 'manifest', EP_PERMALINK );
 	}
 
 	/**
@@ -911,6 +914,34 @@ class Paracharts {
 		status_header( 200 );
 
 		require __DIR__ . '/templates/iframe.php';
+		exit;
+	}
+
+	/**
+	 * Renders the JSON data manifest.
+	 */
+	public function render_manifest() {
+		global $wp_query;
+
+		// Make sure this is a chart with the embed endpoint in the URL
+		if ( ! isset( $wp_query->query['post_type'] ) || ! isset( $wp_query->query['manifest'] ) || 'paracharts' != $wp_query->query['post_type'] ) {
+			return;
+		}
+
+		$post = get_post();
+
+		if ( ! $post ) {
+			wp_die(
+				esc_html__( 'The chart could not be found', 'paracharts' ),
+				esc_html__( 'Chart not found', 'paracharts' ),
+				array( 'response' => 404 )
+			);
+		}
+
+		header( 'Content-Type: application/json' );
+		status_header( 200 );
+
+		require __DIR__ . '/templates/manifest.php';
 		exit;
 	}
 
