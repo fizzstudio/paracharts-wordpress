@@ -9,7 +9,7 @@ class ParachartsJs {
 	public $post;
 	public $post_meta;
 	public $args;
-	public $type_options      = array(
+	public $type_options       = array(
 		'line',
 		'stepline',
 		'column',
@@ -21,9 +21,9 @@ class ParachartsJs {
 		//'histogram',
 		//'lollipop',
 	);
-	public $type_option_names = array();
+	public $type_option_names  = array();
 
-	public $chart_types    = array(
+	public $chart_types        = array(
 		'line'      => 'line',
 		'stepline'  => 'stepline',
 		'column'    => 'column',
@@ -268,7 +268,7 @@ class ParachartsJs {
 	}
 
 	/**
-	 * Hook to the paracharts_image_support filter and indicate that Chart.js supports images
+	 * Hook to the paracharts_image_support filter and indicate that ParaCharts supports images
 	 *
 	 * @param string $supports_images yes/no whether the library supports image generation
 	 * @param string $library the library in question
@@ -299,48 +299,6 @@ class ParachartsJs {
 		}
 
 		return $value_labels;
-	}
-
-	/**
-	 * Handle adding units to axis labels and/or flipping axis labels on bar chart
-	 *
-	 * @param array the current array of chart args
-	 *
-	 * @return array the chart args array with axis labels (and units) added to it
-	 */
-	public function add_axis_labels( $chart_args ) {
-		// Note the additional layer in the array: [0] its needed for Chart.js to see the label settings
-		$chart_args['options']['scales']['x']['title'] = array(
-			'display' => '' == $this->post_meta['x_title'] ? false : true,
-			'text'    => $this->esc_title( $this->post_meta['x_title'] ),
-		);
-
-		// We've got x axis units so we'll add them to the axis label
-		if ( '' != $this->post_meta['x_units'] ) {
-			$chart_args['options']['scales']['x']['title']['display'] = true;
-
-			$units   = get_term_by( 'slug', $this->post_meta['x_units'], paracharts()->slug . '-units' );
-			$x_units = '' != $this->post_meta['x_title'] ? ' (' . $units->name . ')' : $units->name;
-
-			$chart_args['options']['scales']['x']['title']['text'] .= $x_units;
-		}
-
-		$chart_args['options']['scales']['y']['title'] = array(
-			'display' => '' == $this->post_meta['y_title'] ? false : true,
-			'text'    => $this->esc_title( $this->post_meta['y_title'] ),
-		);
-
-		// We've got y axis units so we'll add them to the axis label
-		if ( '' != $this->post_meta['y_units'] ) {
-			$chart_args['options']['scales']['y']['title']['display'] = true;
-
-			$units   = get_term_by( 'slug', $this->post_meta['y_units'], paracharts()->slug . '-units' );
-			$y_units = '' != $this->post_meta['y_title'] ? ' (' . $units->name . ')' : $units->name;
-
-			$chart_args['options']['scales']['y']['title']['text'] .= $y_units;
-		}
-
-		return $chart_args;
 	}
 
 	/**
@@ -387,9 +345,9 @@ class ParachartsJs {
 	/**
 	 * Helper function escapes and modifies text/title values
 	 *
-	 * @param string an string you want to use in Highcharts
+	 * @param string a string you want to use in a chart.
 	 *
-	 * @return string an escaped and modified string
+	 * @return string the escaped and modified string
 	 */
 	public function esc_title( $string ) {
 		$string = html_entity_decode( $string, ENT_QUOTES );
@@ -433,119 +391,5 @@ class ParachartsJs {
 		}
 
 		return $value;
-	}
-
-	/**
-	 * Helper function takes a hex color value and returns an array of RGB values to match
-	 *
-	 * @param string a hex color value
-	 *
-	 * @return array the color as seperate RGB values
-	 */
-	public function hex_to_rgb( $hex ) {
-		// Make sure the hex string is a proper hex string
-		$hex = preg_replace( '#[^0-9A-Fa-f]#', '', $hex );
-		$rgb = array();
-
-		if ( 6 === strlen( $hex ) ) {
-			// If a proper hex code, convert using bitwise operation, no overhead... faster
-			$color_value = hexdec( $hex );
-
-			$rgb['red']   = 0xFF & ( $color_value >> 0x10 );
-			$rgb['green'] = 0xFF & ( $color_value >> 0x8 );
-			$rgb['blue']  = 0xFF & $color_value;
-		} elseif ( 3 == strlen( $hex ) ) {
-			// If shorthand notation we need to do some string manipulations
-			$rgb['red']   = hexdec( str_repeat( substr( $hex, 0, 1 ), 2 ) );
-			$rgb['green'] = hexdec( str_repeat( substr( $hex, 1, 1 ), 2 ) );
-			$rgb['blue']  = hexdec( str_repeat( substr( $hex, 2, 1 ), 2 ) );
-		} else {
-			// Invalid hex color code so we return false
-			return false;
-		}
-
-		return $rgb;
-	}
-
-	/**
-	 * Get all themes available from the various theme directories
-	 *
-	 * @return array an array of themes
-	 */
-	public function get_themes() {
-		$themes = array();
-
-		foreach ( $this->theme_directories as $directory ) {
-			$themes = array_merge( $themes, $this->_get_themes_readdir( $directory ) );
-		}
-
-		return $themes;
-	}
-
-	/**
-	 * Returns the theme options for a given theme
-	 *
-	 * @param string a theme slug
-	 *
-	 * @return string/boolean requested theme options or false if they could not be found
-	 */
-	private function get_theme( $slug ) {
-		foreach ( $this->theme_directories as $directory ) {
-			if ( ! $themes = $this->_get_themes_readdir( $directory ) ) {
-				continue;
-			}
-
-			foreach ( $themes as $theme ) {
-				if ( $theme->slug == $slug ) {
-					return $theme->options;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Get all themes from a given directory
-	 *
-	 * @param string a path to a server directory
-	 *
-	 * @return array an array of all the themes available in a given directory
-	 */
-	private function _get_themes_readdir( $theme_base ) {
-		// Sanity check to make sure we have a real directory
-		if ( ! is_dir( $theme_base ) ) {
-			return array();
-		}
-
-		$theme_dir = new DirectoryIterator( $theme_base );
-		$themes    = array();
-
-		foreach ( $theme_dir as $file ) {
-			if ( ! $file->isFile() || ! preg_match( '#.php$#i', $file->getFilename() ) ) {
-				continue;
-			}
-
-			$theme_data = implode( '', file( $theme_base . $file ) );
-
-			if ( preg_match( '|Theme Name:(.*)$|mi', $theme_data, $name ) ) {
-				$name = trim( _cleanup_header_comment( $name[1] ) );
-			}
-
-			if ( isset( $name ) && '' != $name ) {
-				$file = basename( $file );
-
-				$themes[ $file ] = (object) array(
-					'slug'    => substr( $file, 0, -4 ),
-					'name'    => $name,
-					'file'    => $file,
-					'options' => require $theme_base . $file,
-				);
-			}
-		}
-
-		asort( $themes );
-
-		return $themes;
 	}
 }
