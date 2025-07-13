@@ -16,10 +16,10 @@ class ParachartsJs {
 		'bar',
 		'pie',
 		'donut',
-		'heatmap',
-		'scatter',
-		'histogram',
-		'lollipop',
+		//'heatmap',
+		//'scatter',
+		//'histogram',
+		//'lollipop',
 	);
 	public $type_option_names = array();
 
