@@ -175,6 +175,7 @@ class ParachartsJs {
 		$labels_array = $this->get_value_labels_array();
 		$records      = $this->get_data_sets( $labels_array );
 
+		// For multiline graphs, the column headers become keys, and the row headers are record labels.
 		$series = array(
 			(object) array(
 				'key'     => $this->esc_title( $description ),
@@ -185,12 +186,6 @@ class ParachartsJs {
 					'aggregate'    => 'total',
 				),
 				'records' => $records,
-				/*'records' => array(
-					(object) array( 'x' => 'Dark Energy', 'y' => '73' ),
-					(object) array( 'x' => 'Dark Matter', 'y' => '23' ),
-					(object) array( 'x' => 'Nonluminous Matter', 'y' => '3.6' ),
-					(object) array( 'x' => 'Luminous Matter', 'y' => '0.4' ),
-				),*/
 			),
 		);
 
