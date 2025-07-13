@@ -8,7 +8,6 @@ class Paracharts {
 		'library'      => 'paracharts',
 		'type'         => 'line',
 		'parse_in'     => 'rows',
-		'shared'       => false,
 		'subtitle'     => '',
 		'y_title'      => '',
 		'y_units'      => '',

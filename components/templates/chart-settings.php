@@ -57,12 +57,6 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 					<?php esc_html_e( 'Show Control Panel', 'paracharts' ); ?>
 				</label>
 			</p>
-			<p class="shared">
-				<label for="<?php echo esc_attr( $this->get_field_id( 'shared' ) ); ?>">
-					<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'shared' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'shared' ) ); ?>" value="1"<?php checked( $post_meta['shared'], true ); ?>/>
-					<?php esc_html_e( 'Shared tooltip', 'paracharts' ); ?>
-				</label>
-			</p>
 		</div>
 		<div class="row three vertical-axis">
 			<p>

@@ -268,12 +268,6 @@
 #paracharts .inside .settings .row.two p:first-child {
 	margin-left: 0;
 }
-#paracharts .inside .settings .row.two p.shared {
-	display: none;
-}
-#paracharts .inside .settings .row.two.show-shared p.shared {
-	display: block;
-}
 #paracharts .inside .settings .row.four p {
 	margin-top: 5px;
 }

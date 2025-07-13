@@ -11,5 +11,5 @@ echo '<script id="paracharts-data-' . absint( $post_id ) . '-' . absint( $this->
 
 ?>
 <div id="paracharts-container-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>" class="paracharts-container">
-	<para-chart manifest="<?php echo esc_url( trailingslashit( get_the_permalink() ) . 'manifest/' ); ?>" id="paracharts-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>"></para-chart>
+	<para-chart manifest="<?php echo esc_url( trailingslashit( get_the_permalink() ) . 'manifest/' ); ?>" class="paracharts" id="paracharts-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>"></para-chart>
 </div>

@@ -140,7 +140,7 @@
 			colHeaders:   true,
 			rowHeaders:   true,
 			height:       350,
-			minRows:      17,
+			minRows:      14,
 			minCols:      37,
 			minSpareRows: 1,
 			minSpareCols: 1,
@@ -456,7 +456,6 @@
 		if ( this.request ) {
 			this.request.abort();
 		}
-
 		// Stop form submission while we wait for the chart to refresh and a new image to generate
 		paracharts_admin.form_submission( false );
 
@@ -483,7 +482,6 @@
 		$.each( this.$spreadsheet_tabs.find( '.nav-tab' ), function( i ) {
 			$post_meta['set_names'][ i ] = $( this ).find( 'input' ).val();
 		});
-
 		// Request a new chart_args object so we can rerender the chart with the changes
 		this.request = $.ajax({
 			url: 'admin-ajax.php?action=paracharts_get_chart_args',
@@ -502,8 +500,7 @@
 			if ( true !== response.success ) {
 				return false;
 			}
-
-			$( '.paracharts' ).trigger({
+			$( '.paracharts-container' ).trigger({
 				type:     'chart_args_success',
 				response: response
 			});
