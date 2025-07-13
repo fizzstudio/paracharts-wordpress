@@ -111,7 +111,7 @@ class ParachartsJs {
 		$y_min        = $this->post_meta['y_min'];
 
 		switch ( $type ) {
-			case 'column': // not working.
+			case 'column': // only works with singular data points.
 			case 'line':
 			case 'pie':
 			case 'stepline': // What's the difference between line and stepline?
@@ -136,7 +136,7 @@ class ParachartsJs {
 					'type' => 'angle',
 				);
 				break;
-			case 'bar': // not working.
+			case 'bar': // only works with singular data points
 				$x_display_type = array(
 					'type'        => 'axis',
 					'orientation' => 'vertical',
