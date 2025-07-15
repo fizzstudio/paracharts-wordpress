@@ -116,10 +116,10 @@
 		this.sheet_tab_template = Handlebars.compile( $( document.getElementById( 'paracharts-sheet-tab' ) ).html() );
 
 		this.$spreadsheets = {};
+
 		// hands_on_table_data is an array of data sets so we cycle through them and build a spreadsheet object for each one
 		$.each( hands_on_table_data, function( i, data ) {
 			var instance = Number( i ) + 1;
-
 			paracharts_admin.create_spreadsheet( instance, data );
 		});
 	}
