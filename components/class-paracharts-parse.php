@@ -105,6 +105,7 @@ class Paracharts_Parse {
 			return 'none';
 		}
 
+		// Auto return 'both' if top left cell is empty.
 		if ( '' == $this->data[0][0] ) {
 			return 'both';
 		} elseif (
