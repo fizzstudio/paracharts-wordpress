@@ -30,6 +30,7 @@ class Paracharts {
 	public $parse_options = array(
 		'columns',
 		'rows',
+		'both',
 	);
 	public $options_set;
 	public $plugin_url;
