@@ -98,8 +98,12 @@ class ParachartsJs {
 			$this->get_chart_data( $post_id, $args );
 		}
 
-		// Run the parse class on the data
-		paracharts()->parse()->parse_data( $this->post_meta['data']['sets'][0], $this->post_meta['parse_in'] );
+		if ( isset( $this->post_meta['data']['sets'] ) ) {
+			// Run the parse class on the data
+			paracharts()->parse()->parse_data( $this->post_meta['data']['sets'][0], $this->post_meta['parse_in'] );
+		} else {
+			paracharts()->parse()->parse_data( [], $this->post_meta['parse_in'] );
+		}
 
 		$type         = $this->post_meta['type'];
 		$description  = $this->post_meta['subtitle'];
@@ -288,9 +292,12 @@ class ParachartsJs {
 	 *
 	 * @return array an array of the value labels need for the active chart
 	 */
-
 	public function get_value_labels_array() {
 		$value_labels = paracharts()->parse()->value_labels;
+
+		if ( 'both' === $this->post_meta['parse_in'] ) {
+			return $value_labels;
+		}
 
 		if ( isset( $value_labels['first_column'] ) ) {
 			$label_key = 'rows' == $this->post_meta['parse_in'] ? 'first_row' : 'first_column';
@@ -309,17 +316,19 @@ class ParachartsJs {
 	 * @return array the chart args array with data sets added to it
 	 */
 	public function get_data_sets( $labels ) {
-		$data_array  = array_map( array( $this, 'fix_null_values' ), paracharts()->parse()->set_data );
-		$count       = count( $labels );
-		$data_arrays = array_chunk( $data_array, $count, false );
-		$records     = array();
-		foreach ( $data_arrays as $array ) {
-			foreach ( $array as $key => $point ) {
-				$data_point = (object) array(
-					'x' => $labels[ $key % $count ],
-					'y' => $point,
-				);
-				$records[] = $data_point;
+		$records = array();
+		if ( ! empty( $labels ) ) {
+			$data_array  = array_map( array( $this, 'fix_null_values' ), paracharts()->parse()->set_data );
+			$count       = count( $labels );
+			$data_arrays = array_chunk( $data_array, $count, false );
+			foreach ( $data_arrays as $array ) {
+				foreach ( $array as $key => $point ) {
+					$data_point = (object) array(
+						'x' => $labels[ $key % $count ],
+						'y' => $point,
+					);
+					$records[] = $data_point;
+				}
 			}
 		}
 
