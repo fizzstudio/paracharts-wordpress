@@ -180,6 +180,7 @@ class ParachartsJs {
 		// Not sure how to use this yet.
 		$labels_array = $this->get_value_labels_array();
 		$records      = $this->get_data_sets( $labels_array );
+		$base_kind    = $this->get_base_kind();
 
 		if ( isset( $labels_array['first_column'] ) ) {
 			$series = $records;
@@ -188,18 +189,14 @@ class ParachartsJs {
 				(object) array(
 					'key'     => $this->esc_title( $description ),
 					'theme'   => (object) array(
-						'baseQuantity' => 'energy',
-						'baseKind'     => 'proportion',
-						'entity'       => 'the Universe',
-						'aggregate'    => 'total',
+						'baseQuantity' => $this->post_meta['y_units'],
+						'baseKind'     => $base_kind,
+						'entity'       => $this->post_meta['y_title'],
 					),
 					'records' => $records,
 				),
 			);
 		}
-
-		// For multiline graphs, the column headers become keys, and the row headers are record labels.
-
 
 		$data = (object) array(
 			'source' => 'inline',
@@ -216,7 +213,7 @@ class ParachartsJs {
 					'title'    => $this->esc_title( apply_filters( 'the_title', $this->post->post_title, $this->post->ID ) ),
 					'chartTheme' => (object) array(
 						'baseQuantity' => $this->post_meta['y_units'],
-						'baseKind'     => $this->post_meta['y_unit_type'],
+						'baseKind'     => $base_kind,
 						'entity'       => $this->post_meta['y_title'],
 					),
 					'facets'   => (object) array(
@@ -301,6 +298,32 @@ class ParachartsJs {
 	}
 
 	/**
+	 * Get one of the controlled base kind values from the y unit type.
+	 *
+	 * @return string
+	 */
+	public function get_base_kind() {
+		$unit_type = $this->post_meta['y_unit_type'];
+		switch ( $unit_type ) {
+			case 'Money' :
+			case 'Sales' :
+			case 'Website/Traffic' :
+				$kind = 'number';
+				break;
+			case 'Time' :
+			case 'Length' :
+				$kind = 'dimensioned';
+				break;
+			case 'Rate' :
+				$kind = 'rate';
+				break;
+			default:
+				$kind = 'number';
+		}
+
+		return $kind;
+	}
+	/**
 	 * Returns the value labels array
 	 *
 	 * @return array an array of the value labels need for the active chart
@@ -347,7 +370,7 @@ class ParachartsJs {
 						'key'     => $column_labels[ $key ],
 						'theme'   => (object) array(
 							'baseQuantity' => $this->post_meta['y_units'],
-							'baseKind'     => $this->post_meta['y_unit_type'],
+							'baseKind'     => $this->get_base_kind(),
 							'entity'       => $this->post_meta['y_title'],
 						),
 						'records' => $this->set_records( array( $data ), $labels, $multiple ),
