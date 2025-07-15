@@ -12,8 +12,8 @@
 		this.$title_input    = $( document.getElementById( 'titlewrap' ) ).find( 'input' );
 		this.$subtitle_input = $( document.getElementById( 'titlediv' ) ).find( '#paracharts-subtitle' );
 		this.$y_min_value    = $( document.getElementById( 'paracharts-y_min_value' ) );
-		this.$y_unit_type    = $( document.getElementById( 'paracharts-y-units_type' ) );
-		this.$x_unit_type    = $( document.getElementById( 'paracharts-x-units_type' ) );
+		this.$y_unit_type    = $( document.getElementById( 'paracharts-y_unit_type' ) );
+		this.$x_unit_type    = $( document.getElementById( 'paracharts-x_unit_type' ) );
 		this.$y_unit         = $( document.getElementById( 'paracharts-y-units' ) );
 		this.$x_unit         = $( document.getElementById( 'paracharts-x-units' ) );
 
@@ -44,7 +44,7 @@
 		});
 
 		// Update Units on unit type select.
-		$( '#paracharts-y-units_type' ).on( 'change', function() {
+		$( '#paracharts-y_unit_type' ).on( 'change', function() {
 			let type = $( this ).val();
 			let units = $( '#paracharts-y-units' );
 			units.find( 'option' ).show();
@@ -55,7 +55,7 @@
 		});
 
 		// Update Units on unit type select.
-		$( '#paracharts-x-units_type' ).on( 'change', function() {
+		$( '#paracharts-x_unit_type' ).on( 'change', function() {
 			let type = $( this ).val();
 			let units = $( '#paracharts-x-units' );
 			units.find( 'option' ).show();

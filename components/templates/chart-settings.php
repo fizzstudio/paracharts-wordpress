@@ -64,8 +64,8 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 				<input class="input" type="text" name="<?php echo esc_attr( $this->get_field_name( 'y_title' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'y-title' ) ); ?>" value="<?php echo esc_attr( $post_meta['y_title'] ); ?>" style="width: 100%;" />
 			</p>
 			<p class="units unit-type">
-				<label for="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>_type"><?php esc_html_e( 'Unit Type', 'paracharts' ); ?></label><br />
-				<select name='<?php echo esc_attr( $this->get_field_name( 'y_units' ) ); ?>_type' id="<?php echo esc_attr( $this->get_field_id( 'y-units' ) ); ?>_type" class='select'>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'y_unit_type' ) ); ?>"><?php esc_html_e( 'Unit Type', 'paracharts' ); ?></label><br />
+				<select name='<?php echo esc_attr( $this->get_field_name( 'y_unit_type' ) ); ?>' id="<?php echo esc_attr( $this->get_field_id( 'y_unit_type' ) ); ?>" class='select'>
 					<option value=""><?php esc_html_e( 'All', 'paracharts' ); ?></option>
 					<?php
 					$selected_unit = $post_meta['y_units'];
@@ -118,8 +118,8 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 				<input class="input" type="text" name="<?php echo esc_attr( $this->get_field_name( 'x_title' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'x-title' ) ); ?>" value="<?php echo esc_attr( $post_meta['x_title'] ); ?>" style="width: 100%;" />
 			</p>
 			<p class="units unit-type">
-				<label for="<?php echo esc_attr( $this->get_field_id( 'x-units' ) ); ?>_type"><?php esc_html_e( 'Unit Type', 'paracharts' ); ?></label><br />
-				<select name='<?php echo esc_attr( $this->get_field_name( 'x_units' ) ); ?>_type' id="<?php echo esc_attr( $this->get_field_id( 'x-units' ) ); ?>_type" class='select'>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'x_unit_type' ) ); ?>"><?php esc_html_e( 'Unit Type', 'paracharts' ); ?></label><br />
+				<select name='<?php echo esc_attr( $this->get_field_name( 'x_unit_type' ) ); ?>' id="<?php echo esc_attr( $this->get_field_id( 'x_unit_type' ) ); ?>" class='select'>
 					<option value=""><?php esc_html_e( 'All', 'paracharts' ); ?></option>
 					<?php
 					$selected_unit = $post_meta['x_units'];

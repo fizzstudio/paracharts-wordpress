@@ -108,8 +108,10 @@ class ParachartsJs {
 		$type         = $this->post_meta['type'];
 		$description  = $this->post_meta['subtitle'];
 		$x_units      = $this->post_meta['x_units'];
+		$x_unit_type  = $this->post_meta['x_unit_type'];
 		$x_axis       = $this->post_meta['x_title'];
 		$y_units      = $this->post_meta['y_units'];
+		$y_unit_type  = $this->post_meta['y_unit_type'];
 		$y_axis       = $this->post_meta['y_title'];
 		$controlpanel = $this->post_meta['controlpanel'];
 		$y_min        = $this->post_meta['y_min'];
@@ -179,19 +181,25 @@ class ParachartsJs {
 		$labels_array = $this->get_value_labels_array();
 		$records      = $this->get_data_sets( $labels_array );
 
-		// For multiline graphs, the column headers become keys, and the row headers are record labels.
-		$series = array(
-			(object) array(
-				'key'     => $this->esc_title( $description ),
-				'theme'   => (object) array(
-					'baseQuantity' => 'energy',
-					'baseKind'     => 'proportion',
-					'entity'       => 'the Universe',
-					'aggregate'    => 'total',
+		if ( isset( $labels_array['first_column'] ) ) {
+			$series = $records;
+		} else {
+			$series = array(
+				(object) array(
+					'key'     => $this->esc_title( $description ),
+					'theme'   => (object) array(
+						'baseQuantity' => 'energy',
+						'baseKind'     => 'proportion',
+						'entity'       => 'the Universe',
+						'aggregate'    => 'total',
+					),
+					'records' => $records,
 				),
-				'records' => $records,
-			),
-		);
+			);
+		}
+
+		// For multiline graphs, the column headers become keys, and the row headers are record labels.
+
 
 		$data = (object) array(
 			'source' => 'inline',
@@ -206,6 +214,11 @@ class ParachartsJs {
 				(object) array(
 					'type'     => $this->chart_types[ $type ],
 					'title'    => $this->esc_title( apply_filters( 'the_title', $this->post->post_title, $this->post->ID ) ),
+					'chartTheme' => (object) array(
+						'baseQuantity' => $this->post_meta['y_units'],
+						'baseKind'     => $this->post_meta['y_unit_type'],
+						'entity'       => $this->post_meta['y_title'],
+					),
 					'facets'   => (object) array(
 						'x' => $x_facet,
 						'y' => $y_facet,
@@ -316,25 +329,65 @@ class ParachartsJs {
 	 * @return array the chart args array with data sets added to it
 	 */
 	public function get_data_sets( $labels ) {
-		$records = array();
+		$records  = array();
+		$multiple = false;
 		if ( ! empty( $labels ) ) {
+			if ( isset( $labels['first_column'] ) ) {
+				$column_labels = $labels['first_column'];
+				$labels        = $labels['first_row'];
+				$multiple      = true;
+			}
 			$data_array  = array_map( array( $this, 'fix_null_values' ), paracharts()->parse()->set_data );
 			$count       = count( $labels );
+			$count       = ( $multiple ) ? $count + 1 : $count;
 			$data_arrays = array_chunk( $data_array, $count, false );
-			foreach ( $data_arrays as $array ) {
-				foreach ( $array as $key => $point ) {
-					$data_point = (object) array(
-						'x' => $labels[ $key % $count ],
-						'y' => $point,
+			if ( $multiple ) {
+				foreach ( $data_arrays as $key => $data ) {
+					$records[] = (object) array(
+						'key'     => $column_labels[ $key ],
+						'theme'   => (object) array(
+							'baseQuantity' => $this->post_meta['y_units'],
+							'baseKind'     => $this->post_meta['y_unit_type'],
+							'entity'       => $this->post_meta['y_title'],
+						),
+						'records' => $this->set_records( array( $data ), $labels, $multiple ),
 					);
-					$records[] = $data_point;
 				}
+			} else {
+				$records = $this->set_records( $data_arrays, $labels, $multiple );
 			}
 		}
 
 		return $records;
 	}
 
+	/**
+	 * Handle adding data records.
+	 *
+	 * @param array $data Array of data for data points.
+	 * @param array $labels Array of labels for data points. 
+	 * @param bool  $multiple True if there are multiple data sets.
+	 *
+	 * @return array Array of record objects.
+	 */
+	public function set_records( $data, $labels, $multiple ) {
+		$count = count( $labels );
+		foreach ( $data as $array ) {
+
+			if ( $multiple ) {
+				unset( $array[0] );
+			}
+			foreach ( $array as $key => $point ) {
+				$data_point = (object) array(
+					'x' => $labels[ $key % $count ],
+					'y' => $point,
+				);
+				$records[] = $data_point;
+			}
+		}
+
+		return $records;
+	}
 	/**
 	 * Hook to the paracharts_iframe_scripts filter and add additional scripts if needed
 	 *
