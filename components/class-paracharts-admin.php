@@ -195,11 +195,11 @@ class Paracharts_Admin {
 			$post_id = isset( $_GET['post'] ) ? (int) $_GET['post'] : '';
 
 			// Only load this if we are on an appropriate post page
-			if ( 'post' == $screen->base ) {
+			if ( 'post' == $screen->base && 'paracharts' === $screen->id ) {
 				wp_enqueue_script(
 					'paracharts-chart-admin',
 					$this->plugin_url . '/components/js/paracharts-chart-admin.js',
-					array( 'paracharts-admin', 'paracharts', 'jquery', 'wpa11y' ),
+					array( 'paracharts-admin', 'jquery', 'wpa11y' ),
 					$version
 				);
 			}
