@@ -502,14 +502,14 @@ class Paracharts_Admin {
 		$file_array['tmp_name'] = $file['file'];
 
 		if ( is_wp_error( $file ) ) {
-			@unlink( $file_array['tmp_name'] );
+			wp_delete_file( $file_array['tmp_name'] );
 			$file_array['tmp_name'] = '';
 		}
 
 		$img_id = media_handle_sideload( $file_array, $post->ID, $post->post_title );
 
 		if ( is_wp_error( $img_id ) ) {
-			@unlink( $file_array['tmp_name'] );
+			wp_delete_file( $file_array['tmp_name'] );
 			return $img_id;
 		}
 		// STOP acting like media_sideload_image
@@ -550,14 +550,14 @@ class Paracharts_Admin {
 		}
 
 		// Make sure the file is a CSV file
-		$file_ext = strtolower( pathinfo( $_FILES['import_csv_file']['name'], PATHINFO_EXTENSION ) );
+		$file_ext = strtolower( pathinfo( sanitize_file_name( $_FILES['import_csv_file']['name'] ), PATHINFO_EXTENSION ) );
 
 		if ( 'csv' != $file_ext ) {
 			wp_send_json_error( esc_html__( 'Only CSV files can be imported ', 'paracharts' ) );
 		}
 
 		// Do some validation on the CSV file (mirroring what WP does for this sort of thing)
-		$csv_file = realpath( $_FILES['import_csv_file']['tmp_name'] );
+		$csv_file = realpath( sanitize_file_name( $_FILES['import_csv_file']['tmp_name'] ) );
 
 		if ( ! $csv_file ) {
 			wp_send_json_error( esc_html__( 'File path not found', 'paracharts' ) );
@@ -580,7 +580,7 @@ class Paracharts_Admin {
 		$csv_data = "\n" . trim( $csv_data ) . "\n";
 
 		// Set delimiter
-		$parse_csv->delimiter = isset( $_POST['csv_delimiter'] ) ? $_POST['csv_delimiter'] : paracharts()->get_settings( 'csv_delimiter' );
+		$parse_csv->delimiter = isset( $_POST['csv_delimiter'] ) ? sanitize_text_field( wp_unslash( $_POST['csv_delimiter'] ) ) : paracharts()->get_settings( 'csv_delimiter' );
 		
 		// Parse the CSV 
 		$parse_csv->parse( $csv_data );
@@ -639,14 +639,15 @@ class Paracharts_Admin {
 
 		// If the user passed a data value in their request we'll use it after validation
 		if ( isset( $_POST['data'] ) && isset( $_POST['title'] ) ) {
-			$data      = paracharts()->validate_data( json_decode( stripslashes( $_POST['data'] ) ) );
-			$file_name = sanitize_title( $_POST['title'] );
+			// Data is validated using `wp_filter_no_html_kses` in `validate_data`.
+			$data      = paracharts()->validate_data( json_decode( wp_unslash( $_POST['data'] ) ) );
+			$file_name = sanitize_title( wp_unslash( $_POST['title'] ) );
 		} else {
 			$data      = paracharts()->get_post_meta( $post->ID, 'data' );
 			$file_name = sanitize_title( get_the_title( $post->ID ) );
 		}
 
-		$set_name = sanitize_title( $_REQUEST['set_name'] );
+		$set_name = sanitize_title( wp_unslash( $_REQUEST['set_name'] ) );
 
 		if ( empty( $data ) ) {
 			return;
@@ -674,7 +675,8 @@ class Paracharts_Admin {
 		}
 
 		// Does the post exist?
-		if ( ! $post = get_post( absint( $_POST['post_id'] ) ) ) {
+		$post_id = ( isset( $_POST['post_id'] ) ) ? absint( $_POST['post_id'] ) : false;
+		if ( ! ( $post_id && $post = get_post( absint( $post_id ) ) ) ) {
 			wp_send_json_error( esc_html__( 'Invalid post', 'paracharts' ) );
 		}
 
@@ -692,12 +694,12 @@ class Paracharts_Admin {
 		 */
 		$library = apply_filters( 'paracharts_library_class', paracharts()->library_class );
 
-		// Set these values so that get_chart_args has them already available before we call it
+		// Set these values so that get_chart_args has them already available before we call it.
 		$library->args             = paracharts()->get_chart_default_args;
 		$library->post             = $post;
-		$library->post->post_title = sanitize_text_field( $_POST['title'] );
+		$library->post->post_title = sanitize_text_field( wp_unlash( $_POST['title'] ) );
 
-		// validate_post_meta returns only valid post meta values and does data validation on each item
+		// validate_post_meta returns only valid post meta values and does data validation on each item.
 		$library->post_meta = paracharts()->validate_post_meta( $_POST['post_meta'] );
 
 		wp_send_json_success( $library->get_chart_args( $library->post->ID, $library->args, true, false ) );
