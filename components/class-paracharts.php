@@ -508,12 +508,15 @@ class Paracharts {
 			|| apply_filters( 'paracharts_show_image', false, $post_id, $args )
 		) {
 			$image = $this->get_chart_image( $post_id );
-
-			// Default behavior is to return the full size image but with the width/height values halved
-			// This should result in an image that looks nice on retina or better screens
-			$image['width']  = $image['width'] / 2;
-			$image['height'] = $image['height'] / 2;
-
+			/**
+			 * Filter the array of image attributes.
+			 *
+			 * @hook paracharts_get_chart_image_tag
+			 *
+			 * @param array $image Array of image details.
+			 * @param int   $post_id Chart Post ID.
+			 * @param array $args Display array of arguments. 
+			 */
 			$image = apply_filters( 'paracharts_get_chart_image_tag', $image, $post_id, $args );
 
 			$classes = $this->slug . ' ' . $this->slug . '-' . $post_id;
