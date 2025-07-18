@@ -25,7 +25,7 @@
 						foreach ( paracharts()->csv_delimiters as $delimiter => $delimiter_name ) {
 							?>
 							<option value="<?php echo esc_attr( $delimiter ); ?>"<?php selected( $delimiter, $csv_delimiter ); ?>>
-								<?php esc_html_e( $delimiter_name . ' Delimited', 'paracharts' ); ?>
+								<?php echo esc_html( $delimiter_name ); ?>
 							</option>
 							<?php
 						}
