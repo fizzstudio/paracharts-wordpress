@@ -10,5 +10,5 @@
 $chart_id = $attributes['chartId'] ?? null;
 
 if ( ! empty( $chart_id ) ) :
-	echo '[chart id="' . $chart_id . '"]';
+	echo '[chart id="' . absint( $chart_id ) . '"]';
 endif;
