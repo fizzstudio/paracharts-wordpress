@@ -21,4 +21,4 @@ if ( 1 == $this->instance ) {
 	<?php
 }
 ?>
-<label for="paracharts-share-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>"><?php echo esc_html__( 'Share:', 'paracharts' ); ?></label><textarea rows="3" id="paracharts-share-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>" class="paracharts-share"><?php echo $this->get_chart_iframe( $post_id, $args ); ?></textarea>
+<label for="paracharts-share-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>"><?php echo esc_html__( 'Share:', 'paracharts' ); ?></label><textarea rows="3" id="paracharts-share-<?php echo absint( $post_id ); ?>-<?php echo absint( $this->instance ); ?>" class="paracharts-share"><?php echo esc_textarea( $this->get_chart_iframe( $post_id, $args ) ); ?></textarea>
