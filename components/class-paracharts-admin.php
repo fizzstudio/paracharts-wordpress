@@ -693,7 +693,7 @@ class Paracharts_Admin {
 		// Set these values so that get_chart_args has them already available before we call it.
 		$library->args             = paracharts()->get_chart_default_args;
 		$library->post             = $post;
-		$library->post->post_title = sanitize_text_field( wp_unlash( $_POST['title'] ) );
+		$library->post->post_title = sanitize_text_field( wp_unslash( $_POST['title'] ) );
 
 		// validate_post_meta returns only valid post meta values and does data validation on each item.
 		$library->post_meta = paracharts()->validate_post_meta( $_POST['post_meta'] );

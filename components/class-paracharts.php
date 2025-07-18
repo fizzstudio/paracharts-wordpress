@@ -812,7 +812,12 @@ class Paracharts {
 	 * @return array an array of generated and/or compiled unit terms
 	 */
 	public function get_unit_terms() {
-		$terms = get_terms( $this->slug . '-units' );
+		$terms = get_terms(
+			array(
+				'taxonomy'   => $this->slug . '-units',
+				'hide_empty' => false,
+			)
+		);
 
 		if ( empty( $terms ) ) {
 			$terms = $this->generate_unit_terms();
