@@ -175,14 +175,6 @@ class Paracharts_Admin {
 				$version
 			);
 
-			// canvg is useful for SVG -> Canvas conversions
-			wp_enqueue_script(
-				'canvg',
-				$this->plugin_url . '/components/external/canvg/umd.js',
-				array(),
-				$version
-			);
-
 			// Admin panel JS
 			wp_enqueue_script(
 				'paracharts-admin',

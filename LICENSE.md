@@ -21,8 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 License info for libraries found in `components/external`:
-- [canvg](https://github.com/gabelerner/canvg/)
-	- License at the time of writing: MIT
 - [handlebars](https://github.com/wycats/handlebars.js/)
 	- License at the time of writing: MIT
 - [handsontable](https://github.com/handsontable/handsontable)
