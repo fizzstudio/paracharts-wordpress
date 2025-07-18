@@ -164,7 +164,8 @@ class Paracharts_Admin {
 				'handsontable',
 				$this->plugin_url . '/components/external/handsontable/handsontable.js',
 				array( 'jquery' ),
-				$version
+				$version,
+				false
 			);
 
 			// Handlebars
@@ -172,7 +173,8 @@ class Paracharts_Admin {
 				'handlebars',
 				$this->plugin_url . '/components/external/handlebars/handlebars.js',
 				array(),
-				$version
+				$version,
+				false
 			);
 
 			// Admin panel JS
@@ -180,7 +182,8 @@ class Paracharts_Admin {
 				'paracharts-admin',
 				$this->plugin_url . '/components/js/paracharts-admin.js',
 				array( 'jquery', 'handsontable', 'handlebars' ),
-				$version
+				$version,
+				false
 			);
 
 			// We need the post ID for some bunch of stuff below
@@ -192,7 +195,8 @@ class Paracharts_Admin {
 					'paracharts-chart-admin',
 					$this->plugin_url . '/components/js/paracharts-chart-admin.js',
 					array( 'paracharts-admin', 'jquery', 'wp-a11y' ),
-					$version
+					$version,
+					false
 				);
 			}
 
