@@ -272,12 +272,12 @@ class Paracharts {
 	 */
 	public function plugin_url( $path = '' ) {
 		if ( is_admin() ) {
-			$url_base = parse_url( admin_url() );
+			$url_base = wp_parse_url( admin_url() );
 		} else {
-			$url_base = parse_url( home_url() );
+			$url_base = wp_parse_url( home_url() );
 		}
 
-		$url_path = parse_url( plugins_url( $path, __DIR__ ) );
+		$url_path = wp_parse_url( plugins_url( $path, __DIR__ ) );
 
 		// Check for a port value if one exists we make sure it's honored
 		$port = '';
