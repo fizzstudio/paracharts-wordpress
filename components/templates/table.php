@@ -1,4 +1,4 @@
-<table class="<?php echo esc_attr( $classes ); ?>">
+<table id="parachart-table-<?php echo absint( $post_id ); ?>" class="<?php echo esc_attr( $classes ); ?>">
 	<?php
 	$set_name = '';
 
@@ -16,9 +16,10 @@
 			$row_column = true;
 		}
 		?>
-		<tr><th colspan="<?php echo count( $first_row ) + 1; ?>"><?php echo get_the_title( $post_id ) . $set_name; ?></th></tr>
+		<caption><?php echo esc_html( get_the_title( $post_id ) . $set_name ); ?></caption>
+		<thead>
 		<tr>
-			<th></th>
+			<td></td>
 			<?php
 			foreach ( $first_row as $label ) {
 				?>
@@ -27,6 +28,8 @@
 			}
 			?>
 		</tr>
+		</thead>
+		<tbody>
 		<?php
 		foreach ( $labels as $row => $label ) {
 			?>
@@ -52,10 +55,14 @@
 			</tr>
 			<?php
 		}
+		?>
+		</tbody>
+		<?php
 	} else {
 		$first_row = paracharts()->parse()->value_labels;
 		?>
-		<tr><th colspan="<?php echo count( $first_row ); ?>"><?php echo get_the_title( $post_id ) . $set_name; ?></th></tr>
+		<caption><?php echo esc_html( get_the_title( $post_id ) . $set_name ); ?></caption>
+		<thead>
 		<tr>
 			<?php
 			foreach ( $first_row as $label ) {
@@ -65,6 +72,8 @@
 			}
 			?>
 		</tr>
+		</thead>
+		<tbody>
 		<tr>
 			<?php
 			$row_count = 1;
@@ -91,6 +100,7 @@
 			}
 			?>
 		</tr>
+		</tbody>
 	<?php
 	}
 	?>
