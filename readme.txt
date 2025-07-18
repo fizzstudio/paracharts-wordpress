@@ -1,6 +1,6 @@
-=== ParaCharts for WordPress ===
+=== ParaCharts ===
 Contributors: joedolson
-Tags: paracharts, graphs, charts, data, wcag
+Tags: graphs, accessibility, charts, a11y, wcag
 Requires at least: 6.5
 Tested up to: 6.8
 Stable tag: 0.1.0

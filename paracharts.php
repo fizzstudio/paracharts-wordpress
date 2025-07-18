@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: ParaCharts for WordPress
+Plugin Name: ParaCharts
 Version: 0.1.0
 Plugin URI: https://github.com/fizzstudios/paracharts-wordpress
 Description: Manage data sets and display them as charts in WordPress.
