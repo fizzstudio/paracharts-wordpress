@@ -159,10 +159,14 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 		</div>
 	</div>
 	<div class="column shortcode">
-		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'shortcode' ) ); ?>"><?php esc_html_e( 'Shortcode', 'paracharts' ); ?></label><br />
-			<input class="input widefat" type="text" name="<?php echo esc_attr( $this->get_field_name( 'shortcode' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'shortcode' ) ); ?>" value='[chart id="<?php echo absint( $post->ID ); ?>"]' readonly="readonly" />
-		</p>
+		<div class="paracharts-shortcode">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'shortcode' ) ); ?>"><?php esc_html_e( 'Shortcode', 'paracharts' ); ?></label>
+			<div class="paracharts-flex">
+				<input class="input widefat" type="text" name="<?php echo esc_attr( $this->get_field_name( 'shortcode' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'shortcode' ) ); ?>" value='[chart id="<?php echo absint( $post->ID ); ?>"]' readonly="readonly" />
+				<button data-clipboard-target="#paracharts-shortcode" type="button" class="paracharts-copy-to-clipboard button button-secondary"><?php esc_html_e( 'Copy Shortcode', 'paracharts' ); ?></button>
+			</div>
+			<span id="paracharts-copied" class="hidden notice notice-info"><?php esc_html_e( 'Shortcode Copied', 'paracharts' ); ?></span>
+		</div>
 		<p class="image">
 			<label for="<?php echo esc_attr( $this->get_field_id( 'image' ) ); ?>"><?php esc_html_e( 'Image', 'paracharts' ); ?></label><br />
 			<?php

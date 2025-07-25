@@ -307,3 +307,18 @@
 	padding-left: 10px;
 	padding-right: 10px;
 }
+
+.paracharts-shortcode {
+	margin-top: 1em;
+}
+
+.paracharts-flex {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
+#paracharts-copied:not(.hidden) {
+	padding: .5rem;
+	display: inline-block;
+}

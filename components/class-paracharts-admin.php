@@ -180,9 +180,9 @@ class Paracharts_Admin {
 			wp_enqueue_script(
 				'paracharts-admin',
 				$this->plugin_url . '/components/js/paracharts-admin.js',
-				array( 'jquery', 'handsontable', 'handlebars' ),
+				array( 'jquery', 'handsontable', 'handlebars', 'clipboard' ),
 				$version,
-				false
+				true
 			);
 
 			// We need the post ID for some bunch of stuff below
