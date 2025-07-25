@@ -10,11 +10,9 @@ var chart_admin = {};
 		$chart_type_select.on( 'load, change', this.handle_chart_type );
 		$chart_type_select.trigger( 'change' );
 
-		// Watch for a new chart to be built
-		if ( 'default' === paracharts_admin.performance && 'yes' === paracharts_admin.image_support ) {
-			$( '.paracharts-container' ).on( 'render_done', this.generate_image_from_chart );
-		}
-
+		// Watch for a new chart to be built, then get SVG.
+		// $( '.paracharts-container' ).on( 'render_done', this.generate_image_from_chart );
+	
 		$( '.paracharts-container' ).on( 'chart_args_success', this.refresh_chart );
 	};
 
@@ -43,12 +41,6 @@ var chart_admin = {};
 		}
 
 	};
-
-	// Generate a PNG image out of a rendered chart
-	chart_admin.generate_image_from_chart = function( event ) {
-		// Does nothing.
-	};
-
 
 	// Refresh the chart arguments
 	chart_admin.refresh_chart = function( event ) {
