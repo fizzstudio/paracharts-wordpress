@@ -177,11 +177,11 @@ class ParachartsJs {
 			'displayType'  => (object) $y_display_type,
 		);
 
-		// Not sure how to use this yet.
 		$labels_array = $this->get_value_labels_array();
 		$records      = $this->get_data_sets( $labels_array );
 		$base_kind    = $this->get_base_kind();
 
+		// If this is a multi-axis chart, the 'first_column' key will be set.
 		if ( isset( $labels_array['first_column'] ) ) {
 			$series = $records;
 		} else {
@@ -202,6 +202,7 @@ class ParachartsJs {
 			'source' => 'inline',
 		);
 
+		// I imagine there are other settings that could be configurable.
 		$settings = (object) array(
 			'controlPanel.isControlPanelDefaultOpen' => $controlpanel,
 		);
@@ -211,7 +212,7 @@ class ParachartsJs {
 				(object) array(
 					'type'     => $this->chart_types[ $type ],
 					'title'    => $this->esc_title( apply_filters( 'the_title', $this->post->post_title, $this->post->ID ) ),
-					'subtitle' => $this->esc_title( $description ),
+					'subtitle' => $this->esc_title( $description ), // Doesn't exist yet in paracharts package.
 					'chartTheme' => (object) array(
 						'baseQuantity' => $this->post_meta['y_units'],
 						'baseKind'     => $base_kind,
@@ -228,17 +229,11 @@ class ParachartsJs {
 			),
 		);
 	
-		// Forcing a minimum value of 0 prevents the built in fudging which sometimes looks weird
-		if (
-			$this->post_meta['y_min']
-			&& (
-				   'line' == $type
-				|| 'spline' == $type
-				|| 'area' == $type
-			)
-		) {
+		// Handle y min value.
+		if ( $this->post_meta['y_min'] && ( 'line' == $type || 'spline' == $type || 'area' == $type	) ) {
 			// Need to figure out how this correlates in manifest.
-			// $chart_args['options']['scales']['y']['min'] = $this->post_meta['y_min_value'];
+			// None of the examples use it.
+			// {something} = $this->post_meta['y_min_value'];
 		}
 
 		/**
