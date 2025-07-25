@@ -255,7 +255,7 @@
 	padding: 0;
 }
 #paracharts .inside .settings .row p {
-	margin-bottom: 0;
+	margin: .5rem 0;
 }
 #paracharts .inside .settings .row {
 	display: flex;
@@ -321,4 +321,8 @@
 #paracharts-copied:not(.hidden) {
 	padding: .5rem;
 	display: inline-block;
+}
+
+#paracharts fieldset {
+	margin: 1rem 0;
 }

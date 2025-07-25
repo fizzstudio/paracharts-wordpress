@@ -12,12 +12,20 @@ class Paracharts {
 		'y_title'      => '',
 		'y_units'      => '',
 		'y_unit_type'  => '',
+		'y_data_type'  => '',
+		'y_multiplier' => '',
+		'y_measure'    => '',
 		'y_min'        => false,
+		'y_vartype'    => '',
 		'controlpanel' => true,
 		'y_min_value'  => 0,
 		'x_title'      => '',
 		'x_units'      => '',
 		'x_unit_type'  => '',
+		'x_data_type'  => '',
+		'x_multiplier' => '',
+		'x_measure'    => '',
+		'x_vartype'    => '',
 		'aspect'       => 1,
 		'source'       => '',
 		'source_url'   => '',
@@ -947,19 +955,6 @@ class Paracharts {
 	 */
 	public function paracharts_update_post_meta( $post_id, $parsed_meta ) {
 		$this->library( 'paracharts' )->paracharts_update_post_meta( $post_id, $parsed_meta );
-	}
-
-	/**
-	 * If current page is an AMP page returns true
-	 *
-	 * @return bool
-	 */
-	public function is_amp_endpoint() {
-		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**

@@ -108,16 +108,24 @@ class ParachartsJs {
 		$type         = $this->post_meta['type'];
 		$description  = $this->post_meta['subtitle'];
 		$x_units      = $this->post_meta['x_units'];
+		$x_datatype   = $this->post_meta['x_data_type'];
+		$x_multiplier = $this->post_meta['x_multiplier'];
 		$x_unit_type  = $this->post_meta['x_unit_type'];
+		$x_vartype    = $this->post_meta['x_vartype'];
+		$x_measure    = $this->post_meta['x_measure'];
 		$x_axis       = $this->post_meta['x_title'];
 		$y_units      = $this->post_meta['y_units'];
+		$y_datatype   = $this->post_meta['y_data_type'];
+		$y_multiplier = $this->post_meta['y_multiplier'];
 		$y_unit_type  = $this->post_meta['y_unit_type'];
+		$y_vartype    = $this->post_meta['x_vartype'];
+		$y_measure    = $this->post_meta['y_measure'];
 		$y_axis       = $this->post_meta['y_title'];
 		$controlpanel = $this->post_meta['controlpanel'];
 		$y_min        = $this->post_meta['y_min'];
 
 		switch ( $type ) {
-			case 'column': // only works with singular data points.
+			case 'column':
 			case 'line':
 			case 'pie':
 			case 'stepline': // What's the difference between line and stepline?
@@ -142,7 +150,7 @@ class ParachartsJs {
 					'type' => 'angle',
 				);
 				break;
-			case 'bar': // only works with singular data points
+			case 'bar':
 				$x_display_type = array(
 					'type'        => 'axis',
 					'orientation' => 'vertical',
@@ -160,20 +168,23 @@ class ParachartsJs {
 		// Generate the manifest data for the chart.
 		$x_facet = (object) array(
 			'label'        => $x_axis,
-			'variableType' => 'independent',
-			'measure'      => 'nominal',
-			'datatype'     => 'string',
+			'variableType' => ( $x_vartype ) ? $x_vartype : 'independent',
+			'measure'      => ( $x_measure ) ? $x_measure : 'nominal',
+			'datatype'     => ( $x_datatype ) ? $x_datatype : 'string',
 			'units'        => $x_units,
 			'displayType'  => (object) $x_display_type,
 		);
+		if ( $x_multiplier ) {
+			$x_facet->multiplier = $x_multiplier;
+		}
 
 		$y_facet = (object) array(
 			'label'        => $y_axis,
-			'variableType' => 'dependent',
-			'measure'      => 'ratio',
-			'datatype'     => 'number',
+			'variableType' => ( $y_vartype ) ? $y_vartype : 'dependent',
+			'measure'      => ( $y_measure ) ? $y_measure : 'ratio',
+			'datatype'     => ( $y_datatype ) ? $y_datatype : 'number',
 			'units'        => $y_units,
-			'multiplier'   => 0.01,
+			'multiplier'   => ( $y_multiplier ) ? $y_multiplier : 0.01,
 			'displayType'  => (object) $y_display_type,
 		);
 
