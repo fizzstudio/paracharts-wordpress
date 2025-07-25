@@ -79,6 +79,7 @@ class Paracharts {
 		add_filter( 'paracharts_image_support', array( $this, 'paracharts_image_support' ), 10, 2 );
 		add_filter( 'paracharts_instant_preview_support', array( $this, 'paracharts_instant_preview_support' ), 10, 2 );
 		add_filter( 'paracharts_library_class', array( $this, 'paracharts_library_class' ), 10, 2 );
+		add_filter( 'gettext', array( $this, 'paracharts_custom_text' ), 10, 3 );
 
 		add_shortcode( 'chart', array( $this, 'chart_shortcode' ) );
 		add_shortcode( 'chart-share', array( $this, 'share_shortcode' ) );
@@ -711,6 +712,33 @@ class Paracharts {
 	 */
 	public function paracharts_instant_preview_support( $supports_instant_preview ) {
 		return $supports_instant_preview;
+	}
+
+	/**
+	 * Hook to the gettext and return custom plugin texts.
+	 *
+	 * @param string $translation Translated version of original text.
+	 * @param string $text Original version of text.
+	 * @param string $domain Text domain.
+	 *
+	 * @return string Replacement strings
+	 */
+	public function paracharts_custom_text( $translation, $text, $domain ) {
+		if ( 'default' !== $domain ) {
+			return $translation;
+		} else {
+			global $current_screen;
+			if ( $current_screen && 'paracharts' === $current_screen->id ) {
+				if ( 'Excerpt' === $text ) {
+					return __( 'Chart Summary', 'paracharts' );
+				}
+				if ( 'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="%s">Learn more about manual excerpts</a>.' === $translation ) {
+					return __( 'Used as a custom summary of your chart.', 'paracharts' );
+				}
+			}
+		}
+	
+		return $translation;
 	}
 
 	/**
