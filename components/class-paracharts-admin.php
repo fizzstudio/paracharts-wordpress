@@ -426,6 +426,9 @@ class Paracharts_Admin {
 		// Load the library in question in case there's a filter/action we'll need
 		paracharts()->library( 'paracharts' );
 
+		// Remove the temporary chart arguments when the chart is saved.
+		delete_post_meta( $post->ID, '_dynamic_chart' );
+
 		// update_post_meta passes the $_POST values directly to validate_post_meta
 		// validate_post_meta returns only valid post meta values and does data validation on each item
 		paracharts()->update_post_meta( $post->ID, $_POST[ paracharts()->slug ] );
@@ -643,8 +646,12 @@ class Paracharts_Admin {
 
 		// validate_post_meta returns only valid post meta values and does data validation on each item.
 		$library->post_meta = paracharts()->validate_post_meta( $_POST['post_meta'] );
+		$dynamic_chart      = $library->get_chart_args( $library->post->ID, $library->args, true, false );
+		if ( $dynamic_chart ) {
+			update_post_meta( $post->ID, '_dynamic_chart', $dynamic_chart );
+		}
 
-		wp_send_json_success( $library->get_chart_args( $library->post->ID, $library->args, true, false ) );
+		wp_send_json_success( $dynamic_chart );
 	}
 
 	/**

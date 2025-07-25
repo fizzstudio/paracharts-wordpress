@@ -45,8 +45,14 @@ var chart_admin = {};
 	// Refresh the chart arguments
 	chart_admin.refresh_chart = function( event ) {
 		// For Paracharts, a dynamic preview requires us to fetch the manifest with temporary info.
-		// Not sure how that will work.
 		console.log( 'chart hypothetically refreshes here' );
+		let chart = document.querySelector( 'para-chart' );
+		let manifest = chart.getAttribute( 'manifest' );
+		manifest = new URL( manifest );
+		manifest.searchParams.delete( 'dynamic_chart' );
+		manifest.searchParams.append( 'dynamic_chart', Math.random() );
+		chart.setAttribute( 'manifest', manifest );
+
 		paracharts_admin.form_submission( true );
 	};
 
