@@ -41,8 +41,6 @@ class Paracharts {
 	public $settings     = array(
 		'library'          => 'paracharts',
 		'performance'      => 'default',
-		'image_multiplier' => '2',
-		'image_width'      => '600',
 		'embeds'           => '',
 		'default_theme'    => '_default',
 		'locale'           => 'en-US',

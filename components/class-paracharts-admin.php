@@ -4,7 +4,6 @@ class Paracharts_Admin {
 	private $safe_settings = array(
 		'performance' => array(
 			'default',
-			'no-images',
 			'no-preview',
 		),
 		'csv_delimiter' => array(
@@ -210,8 +209,6 @@ class Paracharts_Admin {
 					'performance'             => paracharts()->get_settings( 'performance' ),
 					'image_support'           => apply_filters( 'paracharts_image_support', 'yes' ),
 					'instant_preview_support' => apply_filters( 'paracharts_instant_preview_support', 'yes' ),
-					'image_multiplier'        => paracharts()->get_settings( 'image_multiplier' ),
-					'image_width'             => paracharts()->get_settings( 'image_width' ),
 					'set_names'               => paracharts()->get_post_meta( $post_id, 'set_names' ),
 					'delete_comfirm'          => esc_attr__( 'Are you sure you want to delete this spreadsheet?', 'paracharts' ),
 				)
@@ -423,7 +420,7 @@ class Paracharts_Admin {
 			return;
 		}
 
-		// If there's an image being passed attach it to the chart post
+		// Get SVG image and save it.
 		$this->attach_image();
 
 		// Load the library in question in case there's a filter/action we'll need
