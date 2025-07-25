@@ -211,6 +211,7 @@ class ParachartsJs {
 				(object) array(
 					'type'     => $this->chart_types[ $type ],
 					'title'    => $this->esc_title( apply_filters( 'the_title', $this->post->post_title, $this->post->ID ) ),
+					'subtitle' => $this->esc_title( $description ),
 					'chartTheme' => (object) array(
 						'baseQuantity' => $this->post_meta['y_units'],
 						'baseKind'     => $base_kind,
