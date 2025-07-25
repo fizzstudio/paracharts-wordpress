@@ -500,44 +500,6 @@ class Paracharts {
 			return $this->build_table( $post_id );
 		}
 
-		// If they want the image version or the request is happening from a feed we return the image tag
-		if ( 'image' == $args['show']
-			|| is_feed()
-			|| $this->is_amp_endpoint()
-			|| apply_filters( 'paracharts_show_image', false, $post_id, $args )
-		) {
-			$image = $this->get_chart_image( $post_id );
-			/**
-			 * Filter the array of image attributes.
-			 *
-			 * @hook paracharts_get_chart_image_tag
-			 *
-			 * @param array $image Array of image details.
-			 * @param int   $post_id Chart Post ID.
-			 * @param array $args Display array of arguments. 
-			 */
-			$image = apply_filters( 'paracharts_get_chart_image_tag', $image, $post_id, $args );
-
-			$classes = $this->slug . ' ' . $this->slug . '-' . $post_id;
-
-			if ( $this->is_amp_endpoint() ) {
-				ob_start();
-				?><amp-img src="<?php echo esc_url( $image['url'] ); ?>" alt="<?php echo esc_attr( $image['name'] ); ?>"
-	width="<?php echo absint( $image['width'] ); ?>" height="<?php echo absint( $image['height'] ); ?>"
-	class="<?php echo esc_attr( $classes ); ?>"></amp-img>
-				<?php
-				return ob_get_clean();
-			} else {
-				ob_start();
-				?>
-<img src="<?php echo esc_url( $image['url'] ); ?>" alt="<?php echo esc_attr( $image['name'] ); ?>"
-	width="<?php echo absint( $image['width'] ); ?>" height="<?php echo absint( $image['height'] ); ?>"
-	alt="<?php echo esc_attr( get_the_title( $post_id ) ); ?>" class="<?php echo esc_attr( $classes ); ?>" />
-				<?php
-				return ob_get_clean();
-			}
-		}
-
 		$settings = $this->get_settings();
 
 		if (
@@ -651,7 +613,7 @@ class Paracharts {
 	}
 
 	/**
-	 * Filter the paracharts_get_chart_image_tag hook and return a plaecholder if appropriate
+	 * Filter the paracharts_get_chart_image_tag hook and return a placeholder if appropriate
 	 *
 	 * @param array|bool an array of image values or false if no image could be found
 	 * @param int $post_id WP post ID of the chart you want an image for
