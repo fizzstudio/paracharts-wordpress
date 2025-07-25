@@ -74,11 +74,6 @@
 			}
 		});
 
-		// Watch for clicks on the image input
-		$( document.getElementById( 'paracharts-image' ) ).on( 'click', function () {
-			$( this ).trigger( 'select' );
-		});
-
 		const clipboard = new ClipboardJS('.paracharts-copy-to-clipboard');
 		clipboard.on( 'success', function(e) {
 			let response = document.getElementById( 'paracharts-copied' );

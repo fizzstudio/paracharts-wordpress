@@ -167,20 +167,5 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 			</div>
 			<span id="paracharts-copied" class="hidden notice notice-info"><?php esc_html_e( 'Shortcode Copied', 'paracharts' ); ?></span>
 		</div>
-		<p class="image">
-			<label for="<?php echo esc_attr( $this->get_field_id( 'image' ) ); ?>"><?php esc_html_e( 'Image', 'paracharts' ); ?></label><br />
-			<?php
-			if ( $image ) {
-				?>
-				<input class="input widefat" type="text" name="<?php echo esc_attr( $this->get_field_name( 'image' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'image' ) ); ?>" value="<?php echo esc_url( $image['url'] ); ?>" readonly="readonly" />
-				<a href="<?php echo esc_url( $image['url'] ); ?>" class="button" target="_blank"><?php esc_html_e( 'View', 'paracharts' ); ?></a>
-				<?php
-			} elseif ( 'default' != $settings['performance'] ) {
-				?><em><?php esc_html_e( 'Image generation is disabled', 'paracharts' ); ?></em><?php
-			} else {
-				?><em><?php esc_html_e( 'Save/Update this post to generate the image version', 'paracharts' ); ?></em><?php
-			}
-			?>
-		</p>
 	</div>
 </div>
