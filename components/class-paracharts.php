@@ -31,6 +31,11 @@ class Paracharts {
 		'source_url'   => '',
 		'data'         => array(),
 		'set_names'    => array(),
+		'kind'         => '',
+		'quantity'     => '',
+		'entity'       => '',
+		'aggregate'    => '',
+		'locale'       => '',
 	);
 	public $get_chart_default_args = array(
 		'show'  => 'chart',

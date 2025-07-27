@@ -115,7 +115,7 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 				</p>
 				<p>
 					<label for="<?php echo esc_attr( $this->get_field_id( 'y-multiplier' ) ); ?>"><?php esc_html_e( 'Multiplier', 'paracharts' ); ?></label><br />
-					<input name="<?php echo esc_attr( $this->get_field_name( 'y-multiplier' ) ); ?>" type="number" id="<?php echo esc_attr( $this->get_field_id( 'y-multiplier' ) ); ?>" value="<?php echo esc_attr( $data->post_meta['y_multiplier'] ); ?>" />
+					<input name="<?php echo esc_attr( $this->get_field_name( 'y-multiplier' ) ); ?>" type="number" id="<?php echo esc_attr( $this->get_field_id( 'y-multiplier' ) ); ?>" value="<?php echo esc_attr( $post_meta['y_multiplier'] ); ?>" />
 				</p>
 				<p>
 					<label for="<?php echo esc_attr( $this->get_field_id( 'y-measure' ) ); ?>"><?php esc_html_e( 'Measure', 'paracharts' ); ?></label><br />
@@ -203,7 +203,7 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 				</p>
 				<p>
 					<label for="<?php echo esc_attr( $this->get_field_id( 'x-multiplier' ) ); ?>"><?php esc_html_e( 'Multiplier', 'paracharts' ); ?></label><br />
-					<input name="<?php echo esc_attr( $this->get_field_name( 'x-multiplier' ) ); ?>" type="number" id="<?php echo esc_attr( $this->get_field_id( 'y-multiplier' ) ); ?>" value="<?php echo esc_attr( $data->post_meta['y_multiplier'] ); ?>" />
+					<input name="<?php echo esc_attr( $this->get_field_name( 'x-multiplier' ) ); ?>" type="number" id="<?php echo esc_attr( $this->get_field_id( 'y-multiplier' ) ); ?>" value="<?php echo esc_attr( $post_meta['y_multiplier'] ); ?>" />
 				</p>
 				<p>
 					<label for="<?php echo esc_attr( $this->get_field_id( 'x-measure' ) ); ?>"><?php esc_html_e( 'Measure', 'paracharts' ); ?></label><br />
@@ -223,6 +223,31 @@ $y_min_disabled = $post_meta['y_min'] ? '' : 'disabled="disabled" ';
 				</p>
 			</div>
 		</fieldset>
+		<div class="row theme">
+			<fieldset>
+				<legend><?php esc_html_e( 'Data Themes', 'paracharts' ); ?></legend>
+				<p>
+					<label for="<?php echo esc_attr( $this->get_field_id( 'kind' ) ); ?>"><?php esc_html_e( 'Kind', 'paracharts' ); ?></label><br />
+					<input name="<?php echo esc_attr( $this->get_field_name( 'kind' ) ); ?>" type="text" id="<?php echo esc_attr( $this->get_field_id( 'kind' ) ); ?>" value="<?php echo esc_attr( $post_meta['kind'] ); ?>" />
+				</p>
+				<p>
+					<label for="<?php echo esc_attr( $this->get_field_id( 'quantity' ) ); ?>"><?php esc_html_e( 'Quantity', 'paracharts' ); ?></label><br />
+					<input name="<?php echo esc_attr( $this->get_field_name( 'quantity' ) ); ?>" type="text" id="<?php echo esc_attr( $this->get_field_id( 'quantity' ) ); ?>" value="<?php echo esc_attr( $post_meta['quantity'] ); ?>" />
+				</p>
+				<p>
+					<label for="<?php echo esc_attr( $this->get_field_id( 'entity' ) ); ?>"><?php esc_html_e( 'Entity', 'paracharts' ); ?></label><br />
+					<input name="<?php echo esc_attr( $this->get_field_name( 'entity' ) ); ?>" type="text" id="<?php echo esc_attr( $this->get_field_id( 'entity' ) ); ?>" value="<?php echo esc_attr( $post_meta['entity'] ); ?>" />
+				</p>
+				<p>
+					<label for="<?php echo esc_attr( $this->get_field_id( 'aggregate' ) ); ?>"><?php esc_html_e( 'Aggregate', 'paracharts' ); ?></label><br />
+					<input name="<?php echo esc_attr( $this->get_field_name( 'aggregate' ) ); ?>" type="text" id="<?php echo esc_attr( $this->get_field_id( 'aggregate' ) ); ?>" value="<?php echo esc_attr( $post_meta['aggregate'] ); ?>" />
+				</p>
+				<p>
+					<label for="<?php echo esc_attr( $this->get_field_id( 'locale' ) ); ?>"><?php esc_html_e( 'Locale', 'paracharts' ); ?></label><br />
+					<input name="<?php echo esc_attr( $this->get_field_name( 'locale' ) ); ?>" type="text" id="<?php echo esc_attr( $this->get_field_id( 'locale' ) ); ?>" value="<?php echo esc_attr( $post_meta['locale'] ); ?>" />
+				</p>		
+			</fieldset>
+		</div>
 	</div>
 	<div class="column shortcode">
 		<div class="paracharts-shortcode">

@@ -123,6 +123,11 @@ class ParachartsJs {
 		$y_axis       = $this->post_meta['y_title'];
 		$controlpanel = $this->post_meta['controlpanel'];
 		$y_min        = $this->post_meta['y_min'];
+		$kind         = $this->post_meta['kind'];
+		$quantity     = $this->post_meta['quantity'];
+		$entity       = $this->post_meta['entity'];
+		$aggregate    = $this->post_meta['aggregate'];
+		$locale       = $this->post_meta['locale'];
 
 		switch ( $type ) {
 			case 'column':
@@ -196,17 +201,25 @@ class ParachartsJs {
 		if ( isset( $labels_array['first_column'] ) ) {
 			$series = $records;
 		} else {
+			$theme = array(
+				'baseQuantity' => ( $quantity ) ? $quantity : $this->post_meta['y_units'],
+				'baseKind'     => ( $kind ) ? $kind : $base_kind,
+				'entity'       => ( $entity ) ? $entity : $this->post_meta['y_title'],
+			);
+			if ( $aggregate ) {
+				$theme['aggregate'] = $aggregate;
+			}
+			if ( $locale ) {
+				$theme['locale'] = $locale;
+			}
 			$series = array(
 				(object) array(
 					'key'     => $this->esc_title( $description ),
-					'theme'   => (object) array(
-						'baseQuantity' => $this->post_meta['y_units'],
-						'baseKind'     => $base_kind,
-						'entity'       => $this->post_meta['y_title'],
-					),
+					'theme'   => (object) $theme,
 					'records' => $records,
 				),
 			);
+
 		}
 
 		$data = (object) array(
@@ -373,13 +386,27 @@ class ParachartsJs {
 			$data_arrays = array_chunk( $data_array, $count, false );
 			if ( $multiple ) {
 				foreach ( $data_arrays as $key => $data ) {
+					$kind         = $this->post_meta['kind'];
+					$quantity     = $this->post_meta['quantity'];
+					$entity       = $this->post_meta['entity'];
+					$aggregate    = $this->post_meta['aggregate'];
+					$locale       = $this->post_meta['locale'];
+					$base_kind    = $this->get_base_kind();
+					// Preferably, multiple data sets would support separate theme.
+					$theme = array(
+						'baseQuantity' => ( $quantity ) ? $quantity : $this->post_meta['y_units'],
+						'baseKind'     => ( $kind ) ? $kind : $base_kind,
+						'entity'       => ( $entity ) ? $entity : $this->post_meta['y_title'],
+					);
+					if ( $aggregate ) {
+						$theme['aggregate'] = $aggregate;
+					}
+					if ( $locale ) {
+						$theme['locale'] = $locale;
+					}
 					$records[] = (object) array(
 						'key'     => $column_labels[ $key ],
-						'theme'   => (object) array(
-							'baseQuantity' => $this->post_meta['y_units'],
-							'baseKind'     => $this->get_base_kind(),
-							'entity'       => $this->post_meta['y_title'],
-						),
+						'theme'   => (object) $theme,
 						'records' => $this->set_records( array( $data ), $labels, $multiple ),
 					);
 				}
