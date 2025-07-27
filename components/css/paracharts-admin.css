@@ -247,9 +247,28 @@
 	border-top: 1px solid #dddddd;
 	padding: 0 10px 10px;
 	display: grid;
-	grid-template-columns: repeat( 2, 1fr );
+	grid-template-columns: repeat( 3, 1fr );
 	gap: 20px;
 }
+
+@media ( width < 720px ) {
+	#paracharts .inside .settings {
+		grid-template-columns: repeat( 2, 1fr );
+	}
+}
+
+@media ( width < 960px ) {
+	#paracharts .inside .settings {
+		grid-template-columns: repeat( 2, 1fr );
+	}
+}
+
+@media ( width < 720px ) {
+	#paracharts .inside .settings {
+		grid-template-columns: 1;
+	}
+}
+
 #paracharts .inside .settings .row {
 	border-top: none;
 	padding: 0;
